@@ -55,7 +55,7 @@ class App extends Component {
 const mapStateToProps = state => ({
 	categories: state.categories,
 	posts: state.posts,
-	actions: state.actions
+	actions: state.offlineActions
 });
 
 const mapDispatchToProps = dispatch => ({

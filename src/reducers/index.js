@@ -12,11 +12,15 @@ const categories = (state = [], action) => {
 	}
 };
 
-const actions = (state = [], action) => {
-	return state.concat(action);
+const offlineActions = (state = [], action) => {
+	if (navigator.onLine) {
+		return state;
+	} else {
+		return state.concat(action);
+	}
 };
 
-const posts = (state = [], action) => {
+const posts = (state = {}, action) => {
 	switch (action.type) {
 		case GET_POSTS_BY_CATEGORY:
 			console.log(action.payload[0]);
@@ -28,6 +32,6 @@ const posts = (state = [], action) => {
 
 export default combineReducers({
 	categories: persistentReducer(categories),
-	actions,
+	offlineActions: persistentReducer(offlineActions),
 	posts
 });
