@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { persistentReducer } from 'redux-pouchdb';
 
 import { GET_CATEGORIES } from '../actions';
 
@@ -16,6 +17,6 @@ const actions = (state = [], action) => {
 };
 
 export default combineReducers({
-	categories,
+	categories: persistentReducer(categories),
 	actions
 });
