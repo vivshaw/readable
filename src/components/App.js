@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { fetchCategories, fetchPostsByCategory } from '../actions';
+import {
+	fetchCategories,
+	fetchPostsByCategory,
+	clearActions
+} from '../actions';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
 
@@ -10,7 +14,8 @@ class App extends Component {
 			actions,
 			posts,
 			getCategories,
-			getPostsByCategory
+			getPostsByCategory,
+			deleteActions
 		} = this.props;
 
 		let categoryList, actionList, postList;
@@ -34,6 +39,7 @@ class App extends Component {
 				<div className="App-header">
 					<h2>redux test</h2>
 					<button onClick={() => getCategories()}>Fetch</button>
+					<button onClick={() => deleteActions()}>Clear</button>
 				</div>
 
 				{!categories.length && <p>No categories!</p>}
@@ -60,6 +66,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	getCategories: () => dispatch(fetchCategories()),
+	deleteActions: () => dispatch(clearActions()),
 	getPostsByCategory: category => dispatch(fetchPostsByCategory(category))
 });
 

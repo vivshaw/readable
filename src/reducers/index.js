@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux';
 import { persistentReducer } from 'redux-pouchdb';
 
-import { GET_CATEGORIES, GET_POSTS_BY_CATEGORY } from '../actions';
+import {
+	GET_CATEGORIES,
+	GET_POSTS_BY_CATEGORY,
+	CLEAR_OFFLINE_ACTIONS
+} from '../actions';
 
 const categories = (state = [], action) => {
 	switch (action.type) {
@@ -14,9 +18,17 @@ const categories = (state = [], action) => {
 
 const offlineActions = (state = [], action) => {
 	if (navigator.onLine) {
-		return state;
+		switch (action.type) {
+			case CLEAR_OFFLINE_ACTIONS:
+				return [];
+			default:
+				return state;
+		}
 	} else {
-		return state.concat(action);
+		switch (action.type) {
+			default:
+				return state.concat(action);
+		}
 	}
 };
 

@@ -4,6 +4,7 @@ import { CategoryAPI } from '../utils/apis';
 
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const GET_POSTS_BY_CATEGORY = 'GET_POSTS_BY_CATEGORY';
+export const CLEAR_OFFLINE_ACTIONS = 'CLEAR_OFFLINE_ACTIONS';
 
 export const receiveCategories = categories => {
 	return {
@@ -28,3 +29,9 @@ export const fetchPostsByCategory = category => dispatch =>
 	CategoryAPI.getCategoryPosts(category).then(data =>
 		dispatch(receivePosts(data))
 	);
+
+export const clearActions = () => {
+	return {
+		type: CLEAR_OFFLINE_ACTIONS
+	};
+};
