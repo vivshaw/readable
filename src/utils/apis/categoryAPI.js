@@ -1,6 +1,5 @@
-import fetchOpts from './fetchOpts';
+import { fetchOpts } from './apiHelpers';
 
 export const getAllCategories = endpoint => () => {
-	console.log(endpoint);
 	return fetch(endpoint, fetchOpts).then(res => res.json());
 };

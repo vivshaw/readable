@@ -5,11 +5,9 @@ import { connect } from 'react-redux';
 class App extends Component {
 	render() {
 		const { categories, actions, getCategories } = this.props;
-		console.log(getCategories);
 
 		let categoryList, actionList;
 		if (categories && actions) {
-			console.log('ctagories: ', categories);
 			categoryList = categories.map(category => <li>{category}</li>);
 			actionList = actions.map(action => <li>Action: {action.type}</li>);
 		}
