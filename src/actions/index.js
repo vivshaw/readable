@@ -9,7 +9,6 @@ export const receiveCategories = categories => {
 };
 
 export const fetchCategories = () => dispatch =>
-	CategoryAPI()
-		.getAllCategories()
+	CategoryAPI.getAllCategories()
 		.then(data => data.categories.map(category => category.name))
 		.then(categoryNames => dispatch(receiveCategories(categoryNames)));

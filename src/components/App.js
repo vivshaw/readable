@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 class App extends Component {
 	render() {
 		const { categories, actions, getCategories } = this.props;
+		console.log(getCategories);
 
 		let categoryList, actionList;
 		if (categories && actions) {
