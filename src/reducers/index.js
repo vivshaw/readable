@@ -26,6 +26,8 @@ const offlineActions = (state = [], action) => {
 		}
 	} else {
 		switch (action.type) {
+			case CLEAR_OFFLINE_ACTIONS:
+				return [];
 			default:
 				return state.concat(action);
 		}

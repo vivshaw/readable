@@ -13,6 +13,7 @@ class App extends Component {
 			categories,
 			actions,
 			posts,
+			online,
 			getCategories,
 			getPostsByCategory,
 			deleteActions
@@ -38,6 +39,7 @@ class App extends Component {
 			<div className="App">
 				<div className="App-header">
 					<h2>redux test</h2>
+					{online ? <h5>Online</h5> : <h5>Offline</h5>}
 					<button onClick={() => getCategories()}>Fetch</button>
 					<button onClick={() => deleteActions()}>Clear</button>
 				</div>
@@ -61,7 +63,8 @@ class App extends Component {
 const mapStateToProps = state => ({
 	categories: state.categories,
 	posts: state.posts,
-	actions: state.offlineActions
+	actions: state.offlineActions,
+	online: state.queue_offline.online
 });
 
 const mapDispatchToProps = dispatch => ({

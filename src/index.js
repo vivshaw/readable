@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { persistentStore } from 'redux-pouchdb';
 import PouchDB from 'pouchdb';
+import { queueOffline } from './enhancer';
 
 const db = new PouchDB('storedb');
 
@@ -16,7 +17,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
 	reducer,
-	composeEnhancers(applyMiddleware(thunk), persistentStore(db))
+	composeEnhancers(applyMiddleware(thunk), persistentStore(db), queueOffline())
 );
 
 ReactDOM.render(
