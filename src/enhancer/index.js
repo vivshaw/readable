@@ -1,6 +1,9 @@
 // @flow
 
-import { queueOfflineReducer, enhanceReducer } from './reducers';
+import { applyMiddleware, compose } from 'redux';
+
+import { enhanceReducer } from './reducers';
+import { queueOfflineMiddleware } from './middleware';
 import { checkBrowserOnline } from './utils';
 
 export const queueOffline = (persist: any) => (createStore: any) => (
@@ -9,13 +12,20 @@ export const queueOffline = (persist: any) => (createStore: any) => (
 	enhancer: any
 ) => {
 	let offlineEnhancedReducer;
+
 	if (persist) {
 		offlineEnhancedReducer = enhanceReducer(reducer, persist);
 	} else {
 		offlineEnhancedReducer = enhanceReducer(reducer);
 	}
 
-	const store = createStore(offlineEnhancedReducer, preloadedState, enhancer);
+	const queueOfflineEnhancer = compose(enhancer);
+
+	const store = createStore(
+		offlineEnhancedReducer,
+		preloadedState,
+		applyMiddleware(queueOfflineMiddleware)
+	);
 
 	const onlineListener = checkBrowserOnline(store.dispatch, store.getState);
 	window.addEventListener('online', onlineListener);

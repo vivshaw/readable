@@ -1,11 +1,27 @@
 // @flow
 
-import { updateOnline, ONLINE, CLEAR_OFFLINE_ACTIONS } from './actions';
-import { persistentReducer } from 'redux-pouchdb';
+import { ONLINE, CLEAR_OFFLINE_ACTIONS } from './actions';
 
 const initialState = {
 	online: navigator.onLine,
-	queuedActions: []
+	queuedActions: [],
+	trying: false
+};
+
+const enqueue = (state, action) => {
+	const queue = state.queuedActions;
+	return {
+		...state,
+		queuedActions: [...queue, action]
+	};
+};
+
+const dequeue = state => {
+	const [, ...rest] = state.queuedActions;
+	return {
+		...state,
+		queuedActions: rest
+	};
 };
 
 export const queueOfflineReducer = (state: any = initialState, action: any) => {
@@ -24,10 +40,7 @@ export const queueOfflineReducer = (state: any = initialState, action: any) => {
 			if (state.online) {
 				return state;
 			} else {
-				return {
-					...state,
-					queuedActions: [...state.queuedActions, action]
-				};
+				return enqueue(state, action);
 			}
 	}
 };

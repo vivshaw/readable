@@ -15,7 +15,6 @@ const categories = (state = [], action) => {
 const posts = (state = {}, action) => {
 	switch (action.type) {
 		case GET_POSTS_BY_CATEGORY:
-			console.log(action.payload[0]);
 			return { ...state, ...action.payload };
 		default:
 			return state;
