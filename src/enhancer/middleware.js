@@ -1,5 +1,9 @@
 import { clearActions } from './actions';
 
+const waitFor = timeout => {
+	return new Promise(resolve => setTimeout(resolve, timeout));
+};
+
 const doEffect = (action, dispatch) => {
 	const effect = action.offlineAction.effect;
 	console.log(effect);
@@ -17,8 +21,10 @@ export const queueOfflineMiddleware = (store: any) => (next: any) => (
 	console.log(store.getState());
 
 	if (queue_offline.queuedActions.length > 0 && queue_offline.online) {
-		doEffect(queue_offline.queuedActions[0], store.dispatch);
-		store.dispatch(clearActions());
+		waitFor(3000).then(() => {
+			doEffect(queue_offline.queuedActions[0], store.dispatch);
+			store.dispatch(clearActions());
+		});
 	}
 
 	return result;
