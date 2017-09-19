@@ -10,7 +10,7 @@ export const queueOffline = (persist: any) => (createStore: any) => (
 ) => {
 	let offlineEnhancedReducer;
 	if (persist) {
-		offlineEnhancedReducer = enhanceReducer(persist(reducer));
+		offlineEnhancedReducer = enhanceReducer(reducer, persist);
 	} else {
 		offlineEnhancedReducer = enhanceReducer(reducer);
 	}
