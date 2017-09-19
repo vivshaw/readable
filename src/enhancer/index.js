@@ -33,3 +33,13 @@ export const queueOffline = (persist: any) => (createStore: any) => (
 
 	return store;
 };
+
+export const get = (url, opts = {}) => {
+	return {
+		url,
+		opts: {
+			method: 'GET',
+			...opts
+		}
+	};
+};

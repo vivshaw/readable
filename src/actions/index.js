@@ -1,6 +1,8 @@
 import map from 'lodash/map';
 
 import { CategoryAPI } from '../utils/apis';
+import { fetchOpts } from '../utils/apis/apiHelpers';
+import { get } from '../enhancer';
 
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const GET_POSTS_BY_CATEGORY = 'GET_POSTS_BY_CATEGORY';
@@ -10,10 +12,7 @@ export const receiveCategories = categories => {
 		type: GET_CATEGORIES,
 		payload: categories,
 		offlineAction: {
-			effect: {
-				url: CategoryAPI.categoryEndpoint,
-				opts: { method: 'GET', headers: { Authorization: 'whatever-you-want' } }
-			}
+			effect: get(CategoryAPI.categoryEndpoint, fetchOpts)
 		}
 	};
 };
