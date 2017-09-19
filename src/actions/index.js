@@ -8,7 +8,13 @@ export const GET_POSTS_BY_CATEGORY = 'GET_POSTS_BY_CATEGORY';
 export const receiveCategories = categories => {
 	return {
 		type: GET_CATEGORIES,
-		payload: categories
+		payload: categories,
+		offlineAction: {
+			effect: {
+				url: CategoryAPI.categoryEndpoint,
+				opts: { method: 'GET', headers: { Authorization: 'whatever-you-want' } }
+			}
+		}
 	};
 };
 

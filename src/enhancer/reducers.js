@@ -32,12 +32,9 @@ export const queueOfflineReducer = (state: any = initialState, action: any) => {
 				online: action.payload
 			};
 		case CLEAR_OFFLINE_ACTIONS:
-			return {
-				...state,
-				queuedActions: []
-			};
+			return dequeue(state);
 		default:
-			if (state.online) {
+			if (state.online || !action.offlineAction) {
 				return state;
 			} else {
 				return enqueue(state, action);

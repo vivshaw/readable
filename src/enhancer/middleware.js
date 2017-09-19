@@ -1,5 +1,13 @@
 import { clearActions } from './actions';
 
+const doEffect = (action, dispatch) => {
+	const effect = action.offlineAction.effect;
+	console.log(effect);
+	fetch(effect.url, effect.opts)
+		.then(res => res.json())
+		.then(data => console.log(data));
+};
+
 export const queueOfflineMiddleware = (store: any) => (next: any) => (
 	action: any
 ) => {
@@ -9,6 +17,7 @@ export const queueOfflineMiddleware = (store: any) => (next: any) => (
 	console.log(store.getState());
 
 	if (queue_offline.queuedActions.length > 0 && queue_offline.online) {
+		doEffect(queue_offline.queuedActions[0], store.dispatch);
 		store.dispatch(clearActions());
 	}
 

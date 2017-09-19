@@ -1,5 +1,9 @@
 import { fetchOpts } from './apiHelpers';
 
+export const categoryEndpoint = endpoint => {
+	return `${endpoint}/categories`;
+};
+
 export const getAllCategories = endpoint => () => {
 	const categoriesEndpoint = `${endpoint}/categories`;
 
