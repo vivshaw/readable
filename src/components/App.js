@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import {
-	fetchCategories,
-	fetchPostsByCategory,
-	clearActions
-} from '../actions';
+import { fetchCategories, fetchPostsByCategory } from '../actions';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
 
@@ -11,16 +7,14 @@ class App extends Component {
 	render() {
 		const {
 			categories,
-			actions,
 			posts,
-			online,
+			queue_offline,
 			getCategories,
-			getPostsByCategory,
-			deleteActions
+			getPostsByCategory
 		} = this.props;
 
-		let categoryList, actionList, postList;
-		if (categories && actions) {
+		let categoryList, postList, actionList;
+		if (categories) {
 			categoryList = categories.map(category => (
 				<li>
 					<button onClick={() => getPostsByCategory(category)}>
@@ -28,20 +22,25 @@ class App extends Component {
 					</button>
 				</li>
 			));
-			actionList = actions.map(action => <li>Action: {action.type}</li>);
 		}
 
 		if (posts) {
 			postList = map(posts, post => <li>Post: {post.title}</li>);
 		}
 
+		if (queue_offline.queuedActions) {
+			actionList = queue_offline.queuedActions.map(action => (
+				<li>{action.type}</li>
+			));
+		}
+
 		return (
 			<div className="App">
 				<div className="App-header">
 					<h2>redux test</h2>
-					{online ? <h5>Online</h5> : <h5>Offline</h5>}
+					{queue_offline.online ? <h5>Online</h5> : <h5>Offline</h5>}
 					<button onClick={() => getCategories()}>Fetch</button>
-					<button onClick={() => deleteActions()}>Clear</button>
+					<button onClick={() => getCategories()}>Clear</button>
 				</div>
 
 				{!categories.length && <p>No categories!</p>}
@@ -49,8 +48,10 @@ class App extends Component {
 					<div>
 						<h3>categories</h3>
 						<ul>{categoryList}</ul>
-						<h3>actions</h3>
+
+						<h3>offline actions</h3>
 						<ul>{actionList}</ul>
+
 						<h3>posts</h3>
 						<ul>{postList}</ul>
 					</div>
@@ -63,13 +64,11 @@ class App extends Component {
 const mapStateToProps = state => ({
 	categories: state.categories,
 	posts: state.posts,
-	actions: state.offlineActions,
-	online: state.queue_offline.online
+	queue_offline: state.queue_offline
 });
 
 const mapDispatchToProps = dispatch => ({
 	getCategories: () => dispatch(fetchCategories()),
-	deleteActions: () => dispatch(clearActions()),
 	getPostsByCategory: category => dispatch(fetchPostsByCategory(category))
 });
 
