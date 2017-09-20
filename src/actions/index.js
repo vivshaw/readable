@@ -1,11 +1,12 @@
 import map from 'lodash/map';
 
 import { CategoryAPI } from '../utils/apis';
-import { fetchOpts } from '../utils/apis/apiHelpers';
-import { get } from '../enhancer';
+import { fetchOpts, postOpts } from '../utils/apis/apiHelpers';
+import { get, post } from '../enhancer';
 
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const GET_POSTS_BY_CATEGORY = 'GET_POSTS_BY_CATEGORY';
+export const CREATE_POST = 'CREATE_POST';
 
 export const receiveCategories = categories => {
 	return {
@@ -33,3 +34,13 @@ export const fetchPostsByCategory = category => dispatch =>
 	CategoryAPI.getCategoryPosts(category).then(data =>
 		dispatch(receivePosts(data))
 	);
+
+export const createPost = newPost => {
+	return {
+		type: CREATE_POST,
+		payload: newPost,
+		offlineAction: {
+			effect: post('http://localhost:3001/posts', newPost, postOpts)
+		}
+	};
+};

@@ -4,6 +4,13 @@ export const fetchOpts = {
 	headers: { Authorization: 'whatever-you-want' }
 };
 
+export const postOpts = {
+	headers: {
+		Authorization: 'whatever-you-want',
+		'Content-Type': 'application/json'
+	}
+};
+
 export const bindApiToEndpoint = api => endpoint =>
 	reduce(
 		api,

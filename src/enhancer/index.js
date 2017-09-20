@@ -1,6 +1,6 @@
 // @flow
 
-import { applyMiddleware, compose } from 'redux';
+import { applyMiddleware } from 'redux';
 
 import { enhanceReducer } from './reducers';
 import { queueOfflineMiddleware } from './middleware';
@@ -19,8 +19,6 @@ export const queueOffline = (persist: any) => (createStore: any) => (
 		offlineEnhancedReducer = enhanceReducer(reducer);
 	}
 
-	const queueOfflineEnhancer = compose(enhancer);
-
 	const store = createStore(
 		offlineEnhancedReducer,
 		preloadedState,
@@ -38,8 +36,22 @@ export const get = (url, opts = {}) => {
 	return {
 		url,
 		opts: {
-			method: 'GET',
 			...opts
 		}
 	};
+};
+
+export const post = (url, body, opts = {}) => {
+	const result = {
+		url,
+		opts: {
+			...opts,
+			method: 'post',
+			body: JSON.stringify(body)
+		}
+	};
+
+	console.log('result: ', result);
+
+	return result;
 };
