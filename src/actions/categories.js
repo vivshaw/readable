@@ -3,7 +3,15 @@ import map from 'lodash/map';
 import { CategoryAPI } from '../utils/apis';
 import { receivePosts } from './posts';
 
+/*
+ | Action types
+ */
+
 export const GET_CATEGORIES = 'GET_CATEGORIES';
+
+/*
+ | Plain actions
+ */
 
 export const receiveCategories = categories => {
 	return {
@@ -11,6 +19,10 @@ export const receiveCategories = categories => {
 		payload: categories
 	};
 };
+
+/*
+ | Thunks
+ */
 
 export const fetchCategories = () => dispatch =>
 	CategoryAPI.getAllCategories()
