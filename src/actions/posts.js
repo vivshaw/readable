@@ -21,3 +21,7 @@ export const createPost = newPost => {
 		}
 	};
 };
+
+export const fetchAllPosts = () => dispatch => {
+	PostAPI.getAllPosts().then(posts => dispatch(receivePosts(posts)));
+};

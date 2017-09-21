@@ -5,4 +5,10 @@ export {
 	fetchCategoryPosts
 } from './categories';
 
-export { RECEIVE_POSTS, CREATE_POST, receivePosts, createPost } from './posts';
+export {
+	RECEIVE_POSTS,
+	CREATE_POST,
+	receivePosts,
+	createPost,
+	fetchAllPosts
+} from './posts';
