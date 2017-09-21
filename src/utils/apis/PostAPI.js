@@ -1,8 +1,16 @@
 import { getOpts } from './apiHelpers';
 
+/*
+ | Endpoints
+ */
+
 export const allPostsEndpoint = endpoint => endpoint;
 
 export const postEndpoint = endpoint => id => `${endpoint}/${id}`;
+
+/*
+ | Top endpoint, /posts
+ */
 
 export const getAllPosts = endpoint => () => {
 	return fetch(endpoint, getOpts)
