@@ -37,3 +37,7 @@ export const createPost = newPost => {
 export const fetchAllPosts = () => dispatch => {
 	PostAPI.getAllPosts().then(posts => dispatch(receivePosts(posts)));
 };
+
+export const fetchPost = id => dispatch => {
+	PostAPI.getPost(id).then(post => dispatch(receivePosts({ id: post })));
+};

@@ -22,3 +22,13 @@ export const getAllPosts = endpoint => () => {
 			}, {})
 		);
 };
+
+/*
+ | Sub endpoint, /posts/:id
+ */
+
+export const getPost = endpoint => id => {
+	const thisPostEndpoint = `${endpoint}/${id}`;
+
+	return fetch(thisPostEndpoint, getOpts).then(res => res.json());
+};

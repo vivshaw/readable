@@ -10,5 +10,6 @@ export {
 	CREATE_POST,
 	receivePosts,
 	createPost,
-	fetchAllPosts
+	fetchAllPosts,
+	fetchPost
 } from './posts';

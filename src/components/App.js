@@ -3,7 +3,8 @@ import {
 	fetchCategories,
 	fetchCategoryPosts,
 	createPost,
-	fetchAllPosts
+	fetchAllPosts,
+	fetchPost
 } from '../actions';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
@@ -29,7 +30,8 @@ class App extends Component {
 			getCategories,
 			getPostsByCategory,
 			makeTestPost,
-			allPosts
+			allPosts,
+			getPost
 		} = this.props;
 
 		let categoryList, postList, actionList;
@@ -65,6 +67,7 @@ class App extends Component {
 					<button onClick={() => getCategories()}>Fetch Categories</button>
 					<button onClick={() => makeTestPost(testPost)}>Create Post</button>
 					<button onClick={() => allPosts()}>All Posts</button>
+					<button onClick={() => getPost(testId)}>Get Test Post</button>
 				</div>
 
 				{!categories.length && <p>No categories!</p>}
@@ -95,7 +98,8 @@ const mapDispatchToProps = dispatch => ({
 	getCategories: () => dispatch(fetchCategories()),
 	getPostsByCategory: category => dispatch(fetchCategoryPosts(category)),
 	makeTestPost: post => dispatch(createPost(post)),
-	allPosts: () => dispatch(fetchAllPosts())
+	allPosts: () => dispatch(fetchAllPosts()),
+	getPost: id => dispatch(fetchPost(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
