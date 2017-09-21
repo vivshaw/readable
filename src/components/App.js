@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { fetchCategories, fetchPostsByCategory, createPost } from '../actions';
+import { fetchCategories, fetchCategoryPosts, createPost } from '../actions';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
 import uuidv4 from 'uuid/v4';
@@ -14,6 +14,8 @@ class App extends Component {
 			author: 'Testy',
 			category: 'redux'
 		};
+
+		const testId = '6ni6ok3ym7mf1p33lnez';
 
 		const {
 			categories,
@@ -36,7 +38,11 @@ class App extends Component {
 		}
 
 		if (posts) {
-			postList = map(posts, post => <li>Post: {post.title}</li>);
+			postList = map(posts, post => (
+				<li>
+					Post: {post.title}, {post.id}
+				</li>
+			));
 		}
 
 		if (queue_offline.queuedActions) {
@@ -51,7 +57,7 @@ class App extends Component {
 					<h2>redux test</h2>
 					{queue_offline.online ? <h5>Online</h5> : <h5>Offline</h5>}
 					<button onClick={() => getCategories()}>Fetch</button>
-					<button onClick={() => makeTestPost(testPost)}>Clear</button>
+					<button onClick={() => makeTestPost(testPost)}>Create Post</button>
 				</div>
 
 				{!categories.length && <p>No categories!</p>}
@@ -80,7 +86,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	getCategories: () => dispatch(fetchCategories()),
-	getPostsByCategory: category => dispatch(fetchPostsByCategory(category)),
+	getPostsByCategory: category => dispatch(fetchCategoryPosts(category)),
 	makeTestPost: post => dispatch(createPost(post))
 });
 

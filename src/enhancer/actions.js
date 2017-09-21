@@ -1,5 +1,5 @@
 export const ONLINE = '@@ONLINE';
-export const CLEAR_OFFLINE_ACTIONS = 'CLEAR_OFFLINE_ACTIONS';
+export const TRY_OFFLINE_ACTION = 'TRY_OFFLINE_ACTION';
 
 export const updateOnline = (online: boolean) => ({
 	type: ONLINE,
@@ -8,6 +8,6 @@ export const updateOnline = (online: boolean) => ({
 
 export const clearActions = () => {
 	return {
-		type: CLEAR_OFFLINE_ACTIONS
+		type: TRY_OFFLINE_ACTION
 	};
 };

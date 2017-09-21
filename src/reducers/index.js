@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { persistentReducer } from 'redux-pouchdb';
 
-import { GET_CATEGORIES, GET_POSTS_BY_CATEGORY } from '../actions';
+import { GET_CATEGORIES, RECEIVE_POSTS } from '../actions';
 
 const categories = (state = [], action) => {
 	switch (action.type) {
@@ -14,7 +14,7 @@ const categories = (state = [], action) => {
 
 const posts = (state = {}, action) => {
 	switch (action.type) {
-		case GET_POSTS_BY_CATEGORY:
+		case RECEIVE_POSTS:
 			return { ...state, ...action.payload };
 		default:
 			return state;

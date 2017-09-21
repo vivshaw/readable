@@ -1,6 +1,6 @@
 import reduce from 'lodash/reduce';
 
-export const fetchOpts = {
+export const getOpts = {
 	headers: { Authorization: 'whatever-you-want' }
 };
 
