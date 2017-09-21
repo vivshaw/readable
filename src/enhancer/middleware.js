@@ -1,4 +1,4 @@
-import { clearActions } from './actions';
+import { tryOfflineAction } from './actions';
 
 const waitFor = timeout => {
 	return new Promise(resolve => setTimeout(resolve, timeout));
@@ -23,7 +23,7 @@ export const queueOfflineMiddleware = (store: any) => (next: any) => (
 	if (queue_offline.queuedActions.length > 0 && queue_offline.online) {
 		waitFor(3000).then(() => {
 			doEffect(queue_offline.queuedActions[0], store.dispatch);
-			store.dispatch(clearActions());
+			store.dispatch(tryOfflineAction());
 		});
 	}
 

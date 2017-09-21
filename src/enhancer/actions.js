@@ -6,7 +6,7 @@ export const updateOnline = (online: boolean) => ({
 	payload: online
 });
 
-export const clearActions = () => {
+export const tryOfflineAction = () => {
 	return {
 		type: TRY_OFFLINE_ACTION
 	};
