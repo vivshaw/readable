@@ -51,7 +51,5 @@ export const post = (url, body, opts = {}) => {
 		}
 	};
 
-	console.log('result: ', result);
-
 	return result;
 };
