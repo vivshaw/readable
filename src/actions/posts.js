@@ -2,6 +2,8 @@ import { post } from '../enhancer';
 import { postOpts } from '../utils/apis/apiHelpers';
 import { PostAPI } from '../utils/apis';
 
+import { receiveComments } from './comments';
+
 /*
  | Action types
  */
@@ -60,5 +62,13 @@ export const fetchAllPosts = () => dispatch => {
 };
 
 export const fetchPost = id => dispatch => {
-	PostAPI.getPost(id).then(post => dispatch(receivePosts({ id: post })));
+	PostAPI.getPost(id).then(post => {
+		dispatch(receivePosts(post));
+	});
+};
+
+export const fetchPostComments = id => dispatch => {
+	PostAPI.getPostComments(id).then(comments =>
+		dispatch(receiveComments(comments))
+	);
 };

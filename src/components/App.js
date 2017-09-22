@@ -6,7 +6,8 @@ import {
 	fetchAllPosts,
 	fetchPost,
 	upvote,
-	downvote
+	downvote,
+	fetchPostComments
 } from '../actions';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
@@ -23,22 +24,24 @@ class App extends Component {
 			category: 'redux'
 		};
 
-		const testId = '6ni6ok3ym7mf1p33lnez';
+		const testId = '8xf0y6ziyjabvozdd253nd';
 
 		const {
 			categories,
 			posts,
 			queue_offline,
+			comments,
 			getCategories,
 			getPostsByCategory,
 			makeTestPost,
 			allPosts,
 			getPost,
 			voteUp,
-			voteDown
+			voteDown,
+			getCommentsByPost
 		} = this.props;
 
-		let categoryList, postList, actionList;
+		let categoryList, postList, actionList, commentList;
 		if (categories) {
 			categoryList = categories.map(category => (
 				<li>
@@ -55,6 +58,10 @@ class App extends Component {
 					Post: {post.title}, {post.id}, {post.voteScore}
 				</li>
 			));
+		}
+
+		if (comments) {
+			commentList = map(comments, comment => <li>Comment: {comment.id}</li>);
 		}
 
 		if (queue_offline.queuedActions) {
@@ -74,6 +81,9 @@ class App extends Component {
 					<button onClick={() => getPost(testId)}>Get Test Post</button>
 					<button onClick={() => voteUp(testId)}>Upvote Test Post</button>
 					<button onClick={() => voteDown(testId)}>Downvote Test Post</button>
+					<button onClick={() => getCommentsByPost(testId)}>
+						Get Test Post Comments
+					</button>
 				</div>
 
 				{!categories.length && <p>No categories!</p>}
@@ -87,6 +97,9 @@ class App extends Component {
 
 						<h3>posts</h3>
 						<ul>{postList}</ul>
+
+						<h3>comments</h3>
+						<ul>{commentList}</ul>
 					</div>
 				)}
 			</div>
@@ -97,7 +110,8 @@ class App extends Component {
 const mapStateToProps = state => ({
 	categories: state.categories,
 	posts: state.posts,
-	queue_offline: state.queue_offline
+	queue_offline: state.queue_offline,
+	comments: state.comments
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -107,7 +121,8 @@ const mapDispatchToProps = dispatch => ({
 	allPosts: () => dispatch(fetchAllPosts()),
 	getPost: id => dispatch(fetchPost(id)),
 	voteUp: id => dispatch(upvote(id)),
-	voteDown: id => dispatch(downvote(id))
+	voteDown: id => dispatch(downvote(id)),
+	getCommentsByPost: id => dispatch(fetchPostComments(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

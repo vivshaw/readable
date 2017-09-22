@@ -13,5 +13,8 @@ export {
 	fetchAllPosts,
 	fetchPost,
 	upvote,
-	downvote
+	downvote,
+	fetchPostComments
 } from './posts';
+
+export { RECEIVE_COMMENTS, receiveComments } from './comments';
