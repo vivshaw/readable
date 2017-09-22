@@ -11,5 +11,7 @@ export {
 	receivePosts,
 	createPost,
 	fetchAllPosts,
-	fetchPost
+	fetchPost,
+	upvote,
+	downvote
 } from './posts';

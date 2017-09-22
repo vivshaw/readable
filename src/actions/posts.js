@@ -8,6 +8,8 @@ import { PostAPI } from '../utils/apis';
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const CREATE_POST = 'CREATE_POST';
+export const UPVOTE = 'UPVOTE';
+export const DOWNVOTE = 'DOWNVOTE';
 
 /*
  | Plain actions
@@ -26,6 +28,25 @@ export const createPost = newPost => {
 		payload: newPost,
 		offlineAction: {
 			effect: post(PostAPI.allPostsEndpoint, newPost, postOpts)
+		}
+	};
+};
+
+export const upvote = id => {
+	return {
+		type: UPVOTE,
+		payload: id,
+		offlineAction: {
+			effect: post(PostAPI.postEndpoint(id), { option: 'upVote' }, postOpts)
+		}
+	};
+};
+
+export const downvote = id => {
+	return {
+		type: DOWNVOTE,
+		offlineAction: {
+			effect: post(PostAPI.postEndpoint(id), { option: 'downVote' }, postOpts)
 		}
 	};
 };

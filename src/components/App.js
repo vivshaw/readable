@@ -4,7 +4,9 @@ import {
 	fetchCategoryPosts,
 	createPost,
 	fetchAllPosts,
-	fetchPost
+	fetchPost,
+	upvote,
+	downvote
 } from '../actions';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
@@ -31,7 +33,9 @@ class App extends Component {
 			getPostsByCategory,
 			makeTestPost,
 			allPosts,
-			getPost
+			getPost,
+			voteUp,
+			voteDown
 		} = this.props;
 
 		let categoryList, postList, actionList;
@@ -48,7 +52,7 @@ class App extends Component {
 		if (posts) {
 			postList = map(posts, post => (
 				<li>
-					Post: {post.title}, {post.id}
+					Post: {post.title}, {post.id}, {post.voteScore}
 				</li>
 			));
 		}
@@ -68,6 +72,8 @@ class App extends Component {
 					<button onClick={() => makeTestPost(testPost)}>Create Post</button>
 					<button onClick={() => allPosts()}>All Posts</button>
 					<button onClick={() => getPost(testId)}>Get Test Post</button>
+					<button onClick={() => voteUp(testId)}>Upvote Test Post</button>
+					<button onClick={() => voteDown(testId)}>Downvote Test Post</button>
 				</div>
 
 				{!categories.length && <p>No categories!</p>}
@@ -99,7 +105,9 @@ const mapDispatchToProps = dispatch => ({
 	getPostsByCategory: category => dispatch(fetchCategoryPosts(category)),
 	makeTestPost: post => dispatch(createPost(post)),
 	allPosts: () => dispatch(fetchAllPosts()),
-	getPost: id => dispatch(fetchPost(id))
+	getPost: id => dispatch(fetchPost(id)),
+	voteUp: id => dispatch(upvote(id)),
+	voteDown: id => dispatch(downvote(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
