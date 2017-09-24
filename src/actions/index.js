@@ -21,5 +21,6 @@ export {
 	RECEIVE_COMMENTS,
 	CREATE_COMMENT,
 	receiveComments,
-	createComment
+	createComment,
+	getComment
 } from './comments';

@@ -17,7 +17,11 @@ export const createComment = comment => {
 		type: CREATE_COMMENT,
 		payload: comment,
 		offlineAction: {
-			effect: post(CommentAPI.commentEndpoint, comment, postOpts)
+			effect: post(CommentAPI.allCommentsEndpoint, comment, postOpts)
 		}
 	};
+};
+
+export const getComment = id => dispatch => {
+	CommentAPI.getComment(id).then(comment => dispatch(receiveComments(comment)));
 };
