@@ -9,7 +9,9 @@ import {
 	downvote,
 	fetchPostComments,
 	createComment,
-	getComment
+	getComment,
+	upvoteComment,
+	downvoteComment
 } from '../actions';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
@@ -52,7 +54,9 @@ class App extends Component {
 			voteDown,
 			getCommentsByPost,
 			makeTestComment,
-			fetchComment
+			fetchComment,
+			voteCommentUp,
+			voteCommentDown
 		} = this.props;
 
 		let categoryList, postList, actionList, commentList;
@@ -75,7 +79,11 @@ class App extends Component {
 		}
 
 		if (comments) {
-			commentList = map(comments, comment => <li>Comment: {comment.id}</li>);
+			commentList = map(comments, comment => (
+				<li>
+					Comment: {comment.id}, {comment.voteScore}
+				</li>
+			));
 		}
 
 		if (queue_offline.queuedActions) {
@@ -103,6 +111,12 @@ class App extends Component {
 					</button>
 					<button onClick={() => fetchComment(testCommentId)}>
 						Get Test Comment
+					</button>
+					<button onClick={() => voteCommentUp(testCommentId)}>
+						Upvote Test Comment
+					</button>
+					<button onClick={() => voteCommentDown(testCommentId)}>
+						Downvote Test Comment
 					</button>
 				</div>
 
@@ -144,7 +158,9 @@ const mapDispatchToProps = dispatch => ({
 	voteDown: id => dispatch(downvote(id)),
 	getCommentsByPost: id => dispatch(fetchPostComments(id)),
 	makeTestComment: comment => dispatch(createComment(comment)),
-	fetchComment: id => dispatch(getComment(id))
+	fetchComment: id => dispatch(getComment(id)),
+	voteCommentUp: id => dispatch(upvoteComment(id)),
+	voteCommentDown: id => dispatch(downvoteComment(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
