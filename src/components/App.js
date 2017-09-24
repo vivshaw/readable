@@ -7,7 +7,8 @@ import {
 	fetchPost,
 	upvote,
 	downvote,
-	fetchPostComments
+	fetchPostComments,
+	createComment
 } from '../actions';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
@@ -26,6 +27,16 @@ class App extends Component {
 
 		const testId = '8xf0y6ziyjabvozdd253nd';
 
+		const testComment = {
+			id: uuidv4(),
+			timestamp: Date.now(),
+			body: 'Test Comment',
+			author: 'Testy',
+			parentId: testId
+		};
+
+		const testCommentId = '894tuq4ut84ut8v4t8wun89g';
+
 		const {
 			categories,
 			posts,
@@ -38,7 +49,8 @@ class App extends Component {
 			getPost,
 			voteUp,
 			voteDown,
-			getCommentsByPost
+			getCommentsByPost,
+			makeTestComment
 		} = this.props;
 
 		let categoryList, postList, actionList, commentList;
@@ -84,6 +96,9 @@ class App extends Component {
 					<button onClick={() => getCommentsByPost(testId)}>
 						Get Test Post Comments
 					</button>
+					<button onClick={() => makeTestComment(testComment)}>
+						Create Comment
+					</button>
 				</div>
 
 				{!categories.length && <p>No categories!</p>}
@@ -122,7 +137,8 @@ const mapDispatchToProps = dispatch => ({
 	getPost: id => dispatch(fetchPost(id)),
 	voteUp: id => dispatch(upvote(id)),
 	voteDown: id => dispatch(downvote(id)),
-	getCommentsByPost: id => dispatch(fetchPostComments(id))
+	getCommentsByPost: id => dispatch(fetchPostComments(id)),
+	makeTestComment: comment => dispatch(createComment(comment))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -17,4 +17,9 @@ export {
 	fetchPostComments
 } from './posts';
 
-export { RECEIVE_COMMENTS, receiveComments } from './comments';
+export {
+	RECEIVE_COMMENTS,
+	CREATE_COMMENT,
+	receiveComments,
+	createComment
+} from './comments';
