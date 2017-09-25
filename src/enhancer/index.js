@@ -67,7 +67,7 @@ export const put = (url, body, opts = {}) => {
 	return result;
 };
 
-export const delete = (url, opts = {}) => {
+export const deleteMethod = (url, opts = {}) => {
 	return {
 		url,
 		opts: {
