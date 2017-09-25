@@ -14,7 +14,8 @@ import {
 	downvoteComment,
 	editPost,
 	editComment,
-	deletePost
+	deletePost,
+	deleteComment
 } from '../actions';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
@@ -62,7 +63,8 @@ class App extends Component {
 			voteCommentDown,
 			editTestPost,
 			editTestComment,
-			deleteTestPost
+			deleteTestPost,
+			deleteTestComment
 		} = this.props;
 
 		let categoryList, postList, actionList, commentList;
@@ -130,6 +132,9 @@ class App extends Component {
 					<button onClick={() => fetchComment(testCommentId)}>
 						Get Test Comment
 					</button>
+					<button onClick={() => deleteTestComment(testCommentId)}>
+						Delete Test Comment
+					</button>
 					<button
 						onClick={() =>
 							editTestComment(testCommentId, {
@@ -191,7 +196,8 @@ const mapDispatchToProps = dispatch => ({
 	editTestPost: (id, postChanges) => dispatch(editPost(id, postChanges)),
 	editTestComment: (id, commentChanges) =>
 		dispatch(editComment(id, commentChanges)),
-	deleteTestPost: id => dispatch(deletePost(id))
+	deleteTestPost: id => dispatch(deletePost(id)),
+	deleteTestComment: id => dispatch(deleteComment(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

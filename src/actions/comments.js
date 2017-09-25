@@ -1,4 +1,4 @@
-import { post, put } from '../enhancer';
+import { post, put, deleteMethod } from '../enhancer';
 import { postOpts } from '../utils/apis/apiHelpers';
 import { CommentAPI } from '../utils/apis';
 
@@ -7,6 +7,7 @@ export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const UPVOTE_COMMENT = 'UPVOTE_COMMENT';
 export const DOWNVOTE_COMMENT = 'DOWNVOTE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 export const receiveComments = comments => {
 	return {
@@ -63,6 +64,16 @@ export const editComment = (id, commentChanges) => {
 		payload: id,
 		offlineAction: {
 			effect: put(CommentAPI.commentEndpoint(id), commentChanges, postOpts)
+		}
+	};
+};
+
+export const deleteComment = (id, commentChanges) => {
+	return {
+		type: DELETE_COMMENT,
+		payload: id,
+		offlineAction: {
+			effect: deleteMethod(CommentAPI.commentEndpoint(id), postOpts)
 		}
 	};
 };

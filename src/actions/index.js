@@ -29,10 +29,12 @@ export {
 	UPVOTE_COMMENT,
 	DOWNVOTE_COMMENT,
 	EDIT_COMMENT,
+	DELETE_COMMENT,
 	receiveComments,
 	createComment,
 	getComment,
 	upvoteComment,
 	downvoteComment,
-	editComment
+	editComment,
+	deleteComment
 } from './comments';
