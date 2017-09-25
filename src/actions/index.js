@@ -7,7 +7,6 @@ export {
 
 export {
 	RECEIVE_POSTS,
-	CREATE_POST,
 	UPVOTE,
 	DOWNVOTE,
 	EDIT_POST,

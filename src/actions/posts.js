@@ -9,7 +9,6 @@ import { receiveComments } from './comments';
  */
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
-export const CREATE_POST = 'CREATE_POST';
 export const UPVOTE = 'UPVOTE';
 export const DOWNVOTE = 'DOWNVOTE';
 export const EDIT_POST = 'EDIT_POST';
@@ -27,9 +26,13 @@ export const receivePosts = posts => {
 };
 
 export const createPost = newPost => {
+	const formattedPost = {};
+	formattedPost[newPost.id] = { ...newPost, voteScore: 0 };
+	console.log(formattedPost);
+
 	return {
-		type: CREATE_POST,
-		payload: newPost,
+		type: RECEIVE_POSTS,
+		payload: formattedPost,
 		offlineAction: {
 			effect: post(PostAPI.allPostsEndpoint, newPost, postOpts)
 		}
