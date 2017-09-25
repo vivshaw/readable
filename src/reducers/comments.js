@@ -13,7 +13,12 @@ const comments = (state = {}, action) => {
 
 	switch (action.type) {
 		case RECEIVE_COMMENTS:
-			return { ...state, ...comments };
+			if (!comments.error) {
+				return { ...state, ...comments };
+			} else if (id) {
+				return omit(state, id);
+			}
+			return state;
 		case EDIT_COMMENT:
 			const editedComment = Object.assign({}, state[id], changes);
 			return { ...state, [id]: editedComment };

@@ -18,11 +18,17 @@ export const DELETE_POST = 'DELETE_POST';
  | Plain actions
  */
 
-export const receivePosts = posts => {
-	return {
+export const receivePosts = (posts, id) => {
+	let action = {
 		type: RECEIVE_POSTS,
 		posts
 	};
+
+	if (id) {
+		action.id = id;
+	}
+
+	return action;
 };
 
 export const createPost = newPost => {
@@ -89,7 +95,7 @@ export const fetchAllPosts = () => dispatch => {
 
 export const fetchPost = id => dispatch => {
 	PostAPI.getPost(id).then(post => {
-		dispatch(receivePosts(post));
+		dispatch(receivePosts(post, id));
 	});
 };
 

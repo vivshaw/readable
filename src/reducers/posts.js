@@ -13,7 +13,12 @@ const posts = (state = {}, action) => {
 
 	switch (action.type) {
 		case RECEIVE_POSTS:
-			return { ...state, ...posts };
+			if (!posts.error) {
+				return { ...state, ...posts };
+			} else if (id) {
+				return omit(state, id);
+			}
+			return state;
 		case EDIT_POST:
 			const editedPost = Object.assign({}, state[id], changes);
 			return { ...state, [id]: editedPost };

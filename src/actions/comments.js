@@ -10,11 +10,17 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 /* Plain actions */
 
-export const receiveComments = comments => {
-	return {
+export const receiveComments = (comments, id) => {
+	let action = {
 		type: RECEIVE_COMMENTS,
 		comments
 	};
+
+	if (id) {
+		action.id = id;
+	}
+
+	return action;
 };
 
 /* Offline actions */
@@ -26,6 +32,7 @@ export const createComment = comment => {
 	return {
 		type: RECEIVE_COMMENTS,
 		comments: formattedComment,
+		id: comment.id,
 		offlineAction: {
 			effect: post(CommentAPI.allCommentsEndpoint, comment, postOpts)
 		}
@@ -84,5 +91,7 @@ export const deleteComment = (id, commentChanges) => {
 /* Thunks */
 
 export const getComment = id => dispatch => {
-	CommentAPI.getComment(id).then(comment => dispatch(receiveComments(comment)));
+	CommentAPI.getComment(id).then(comment =>
+		dispatch(receiveComments(comment, id))
+	);
 };

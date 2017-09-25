@@ -19,7 +19,13 @@ export const getComment = endpoint => id => {
 		.then(res => res.json())
 		.then(data => {
 			let comment = {};
-			comment[data.id] = data;
+
+			if (data.id) {
+				comment[data.id] = data;
+			} else {
+				comment.error = `Comment ${id} does not exist!`;
+			}
+
 			return comment;
 		});
 };

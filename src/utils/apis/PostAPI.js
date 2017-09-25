@@ -37,7 +37,13 @@ export const getPost = endpoint => id => {
 		.then(res => res.json())
 		.then(data => {
 			let post = {};
-			post[data.id] = data;
+
+			if (data.id) {
+				post[data.id] = data;
+			} else {
+				post.error = `Post ${id} does not exist!`;
+			}
+
 			return post;
 		});
 };
