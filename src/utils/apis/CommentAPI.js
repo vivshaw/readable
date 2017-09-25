@@ -1,3 +1,5 @@
+import omit from 'lodash/omit';
+
 import { getOpts } from './apiHelpers';
 
 /*
@@ -21,7 +23,7 @@ export const getComment = endpoint => id => {
 			let comment = {};
 
 			if (data.id) {
-				comment[data.id] = data;
+				comment[data.id] = omit(data, 'deleted');
 			} else {
 				comment.error = `Comment ${id} does not exist!`;
 			}
