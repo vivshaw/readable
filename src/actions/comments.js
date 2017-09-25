@@ -3,37 +3,39 @@ import { postOpts } from '../utils/apis/apiHelpers';
 import { CommentAPI } from '../utils/apis';
 
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
-export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const UPVOTE_COMMENT = 'UPVOTE_COMMENT';
 export const DOWNVOTE_COMMENT = 'DOWNVOTE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 
+/* Plain actions */
+
 export const receiveComments = comments => {
 	return {
 		type: RECEIVE_COMMENTS,
-		payload: comments
+		comments
 	};
 };
 
+/* Offline actions */
+
 export const createComment = comment => {
+	const formattedComment = {};
+	formattedComment[comment.id] = { ...comment, voteScore: 0 };
+
 	return {
-		type: CREATE_COMMENT,
-		payload: comment,
+		type: RECEIVE_COMMENTS,
+		comments: formattedComment,
 		offlineAction: {
 			effect: post(CommentAPI.allCommentsEndpoint, comment, postOpts)
 		}
 	};
 };
 
-export const getComment = id => dispatch => {
-	CommentAPI.getComment(id).then(comment => dispatch(receiveComments(comment)));
-};
-
 export const upvoteComment = id => {
 	return {
 		type: UPVOTE_COMMENT,
-		payload: id,
+		id,
 		offlineAction: {
 			effect: post(
 				CommentAPI.commentEndpoint(id),
@@ -47,7 +49,7 @@ export const upvoteComment = id => {
 export const downvoteComment = id => {
 	return {
 		type: DOWNVOTE_COMMENT,
-		payload: id,
+		id,
 		offlineAction: {
 			effect: post(
 				CommentAPI.commentEndpoint(id),
@@ -58,12 +60,13 @@ export const downvoteComment = id => {
 	};
 };
 
-export const editComment = (id, commentChanges) => {
+export const editComment = (id, changes) => {
 	return {
 		type: EDIT_COMMENT,
-		payload: id,
+		id,
+		changes,
 		offlineAction: {
-			effect: put(CommentAPI.commentEndpoint(id), commentChanges, postOpts)
+			effect: put(CommentAPI.commentEndpoint(id), changes, postOpts)
 		}
 	};
 };
@@ -71,9 +74,15 @@ export const editComment = (id, commentChanges) => {
 export const deleteComment = (id, commentChanges) => {
 	return {
 		type: DELETE_COMMENT,
-		payload: id,
+		id,
 		offlineAction: {
 			effect: deleteMethod(CommentAPI.commentEndpoint(id), postOpts)
 		}
 	};
+};
+
+/* Thunks */
+
+export const getComment = id => dispatch => {
+	CommentAPI.getComment(id).then(comment => dispatch(receiveComments(comment)));
 };

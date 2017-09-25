@@ -9,7 +9,6 @@ import { receiveComments } from './comments';
  */
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
-export const CREATE_POST = 'CREATE_POST';
 export const UPVOTE = 'UPVOTE';
 export const DOWNVOTE = 'DOWNVOTE';
 export const EDIT_POST = 'EDIT_POST';
@@ -22,14 +21,17 @@ export const DELETE_POST = 'DELETE_POST';
 export const receivePosts = posts => {
 	return {
 		type: RECEIVE_POSTS,
-		payload: posts
+		posts
 	};
 };
 
 export const createPost = newPost => {
+	const formattedPost = {};
+	formattedPost[newPost.id] = { ...newPost, voteScore: 0 };
+
 	return {
-		type: CREATE_POST,
-		payload: newPost,
+		type: RECEIVE_POSTS,
+		posts: formattedPost,
 		offlineAction: {
 			effect: post(PostAPI.allPostsEndpoint, newPost, postOpts)
 		}
@@ -39,7 +41,7 @@ export const createPost = newPost => {
 export const upvote = id => {
 	return {
 		type: UPVOTE,
-		payload: id,
+		id,
 		offlineAction: {
 			effect: post(PostAPI.postEndpoint(id), { option: 'upVote' }, postOpts)
 		}
@@ -49,17 +51,20 @@ export const upvote = id => {
 export const downvote = id => {
 	return {
 		type: DOWNVOTE,
+		id,
 		offlineAction: {
 			effect: post(PostAPI.postEndpoint(id), { option: 'downVote' }, postOpts)
 		}
 	};
 };
 
-export const editPost = (id, postChanges) => {
+export const editPost = (id, changes) => {
 	return {
 		type: EDIT_POST,
+		id,
+		changes,
 		offlineAction: {
-			effect: put(PostAPI.postEndpoint(id), postChanges, postOpts)
+			effect: put(PostAPI.postEndpoint(id), changes, postOpts)
 		}
 	};
 };
@@ -67,6 +72,7 @@ export const editPost = (id, postChanges) => {
 export const deletePost = id => {
 	return {
 		type: DELETE_POST,
+		id,
 		offlineAction: {
 			effect: deleteMethod(PostAPI.postEndpoint(id), postOpts)
 		}
