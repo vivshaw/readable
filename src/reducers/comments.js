@@ -1,6 +1,12 @@
 import omit from 'lodash/omit';
 
-import { RECEIVE_COMMENTS, DELETE_COMMENT, EDIT_COMMENT } from '../actions';
+import {
+	RECEIVE_COMMENTS,
+	DELETE_COMMENT,
+	EDIT_COMMENT,
+	UPVOTE_COMMENT,
+	DOWNVOTE_COMMENT
+} from '../actions';
 
 const comments = (state = {}, action) => {
 	const { id, comments, changes } = action;
@@ -11,6 +17,12 @@ const comments = (state = {}, action) => {
 		case EDIT_COMMENT:
 			const editedComment = Object.assign({}, state[id], changes);
 			return { ...state, [id]: editedComment };
+		case UPVOTE_COMMENT:
+			const upvotedScore = state[id].voteScore + 1;
+			return { ...state, [id]: { ...state[id], voteScore: upvotedScore } };
+		case DOWNVOTE_COMMENT:
+			const downvotedScore = state[id].voteScore - 1;
+			return { ...state, [id]: { ...state[id], voteScore: downvotedScore } };
 		case DELETE_COMMENT:
 			return omit(state, id);
 		default:
