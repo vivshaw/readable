@@ -57,11 +57,15 @@ export const downvote = id => {
 	};
 };
 
-export const editPost = (id, postChanges) => {
+export const editPost = (id, changes) => {
 	return {
 		type: EDIT_POST,
+		payload: {
+			id,
+			changes
+		},
 		offlineAction: {
-			effect: put(PostAPI.postEndpoint(id), postChanges, postOpts)
+			effect: put(PostAPI.postEndpoint(id), changes, postOpts)
 		}
 	};
 };
