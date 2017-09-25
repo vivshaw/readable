@@ -1,4 +1,4 @@
-import { post } from '../enhancer';
+import { post, put } from '../enhancer';
 import { postOpts } from '../utils/apis/apiHelpers';
 import { PostAPI } from '../utils/apis';
 
@@ -12,6 +12,7 @@ export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const CREATE_POST = 'CREATE_POST';
 export const UPVOTE = 'UPVOTE';
 export const DOWNVOTE = 'DOWNVOTE';
+export const EDIT_POST = 'EDIT_POST';
 
 /*
  | Plain actions
@@ -49,6 +50,15 @@ export const downvote = id => {
 		type: DOWNVOTE,
 		offlineAction: {
 			effect: post(PostAPI.postEndpoint(id), { option: 'downVote' }, postOpts)
+		}
+	};
+};
+
+export const editPost = (id, postChanges) => {
+	return {
+		type: EDIT_POST,
+		offlineAction: {
+			effect: put(PostAPI.postEndpoint(id), postChanges, postOpts)
 		}
 	};
 };

@@ -8,13 +8,17 @@ export {
 export {
 	RECEIVE_POSTS,
 	CREATE_POST,
+	UPVOTE,
+	DOWNVOTE,
+	EDIT_POST,
 	receivePosts,
 	createPost,
 	fetchAllPosts,
 	fetchPost,
 	upvote,
 	downvote,
-	fetchPostComments
+	fetchPostComments,
+	editPost
 } from './posts';
 
 export {

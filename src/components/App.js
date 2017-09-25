@@ -11,7 +11,8 @@ import {
 	createComment,
 	getComment,
 	upvoteComment,
-	downvoteComment
+	downvoteComment,
+	editPost
 } from '../actions';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
@@ -56,7 +57,8 @@ class App extends Component {
 			makeTestComment,
 			fetchComment,
 			voteCommentUp,
-			voteCommentDown
+			voteCommentDown,
+			editTestPost
 		} = this.props;
 
 		let categoryList, postList, actionList, commentList;
@@ -103,6 +105,14 @@ class App extends Component {
 					<button onClick={() => getPost(testId)}>Get Test Post</button>
 					<button onClick={() => voteUp(testId)}>Upvote Test Post</button>
 					<button onClick={() => voteDown(testId)}>Downvote Test Post</button>
+					<button
+						onClick={() =>
+							editTestPost(testId, { title: 'Edited!', body: 'Edited body!' })}
+					>
+						Edit Test Post
+					</button>
+				</div>
+				<div>
 					<button onClick={() => getCommentsByPost(testId)}>
 						Get Test Post Comments
 					</button>
@@ -160,7 +170,8 @@ const mapDispatchToProps = dispatch => ({
 	makeTestComment: comment => dispatch(createComment(comment)),
 	fetchComment: id => dispatch(getComment(id)),
 	voteCommentUp: id => dispatch(upvoteComment(id)),
-	voteCommentDown: id => dispatch(downvoteComment(id))
+	voteCommentDown: id => dispatch(downvoteComment(id)),
+	editTestPost: (id, postChanges) => dispatch(editPost(id, postChanges))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
