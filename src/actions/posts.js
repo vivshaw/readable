@@ -1,4 +1,4 @@
-import { post, put } from '../enhancer';
+import { post, put, deleteMethod } from '../enhancer';
 import { postOpts } from '../utils/apis/apiHelpers';
 import { PostAPI } from '../utils/apis';
 
@@ -13,6 +13,7 @@ export const CREATE_POST = 'CREATE_POST';
 export const UPVOTE = 'UPVOTE';
 export const DOWNVOTE = 'DOWNVOTE';
 export const EDIT_POST = 'EDIT_POST';
+export const DELETE_POST = 'DELETE_POST';
 
 /*
  | Plain actions
@@ -59,6 +60,15 @@ export const editPost = (id, postChanges) => {
 		type: EDIT_POST,
 		offlineAction: {
 			effect: put(PostAPI.postEndpoint(id), postChanges, postOpts)
+		}
+	};
+};
+
+export const deletePost = id => {
+	return {
+		type: DELETE_POST,
+		offlineAction: {
+			effect: deleteMethod(PostAPI.postEndpoint(id), postOpts)
 		}
 	};
 };

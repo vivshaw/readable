@@ -11,6 +11,7 @@ export {
 	UPVOTE,
 	DOWNVOTE,
 	EDIT_POST,
+	DELETE_POST,
 	receivePosts,
 	createPost,
 	fetchAllPosts,
@@ -18,7 +19,8 @@ export {
 	upvote,
 	downvote,
 	fetchPostComments,
-	editPost
+	editPost,
+	deletePost
 } from './posts';
 
 export {
