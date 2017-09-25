@@ -24,7 +24,7 @@ const posts = (state = {}, action) => {
 			const downvotedScore = state[id].voteScore - 1;
 			return { ...state, [id]: { ...state[id], voteScore: downvotedScore } };
 		case DELETE_POST:
-			return omit(state, action.payload);
+			return omit(state, id);
 		default:
 			return state;
 	}
