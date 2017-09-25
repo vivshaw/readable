@@ -1,4 +1,4 @@
-import { post } from '../enhancer';
+import { post, put } from '../enhancer';
 import { postOpts } from '../utils/apis/apiHelpers';
 import { CommentAPI } from '../utils/apis';
 
@@ -6,6 +6,7 @@ export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const UPVOTE_COMMENT = 'UPVOTE_COMMENT';
 export const DOWNVOTE_COMMENT = 'DOWNVOTE_COMMENT';
+export const EDIT_COMMENT = 'EDIT_COMMENT';
 
 export const receiveComments = comments => {
 	return {
@@ -52,6 +53,16 @@ export const downvoteComment = id => {
 				{ option: 'downVote' },
 				postOpts
 			)
+		}
+	};
+};
+
+export const editComment = (id, commentChanges) => {
+	return {
+		type: EDIT_COMMENT,
+		payload: id,
+		offlineAction: {
+			effect: put(CommentAPI.commentEndpoint(id), commentChanges, postOpts)
 		}
 	};
 };

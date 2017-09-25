@@ -24,9 +24,13 @@ export {
 export {
 	RECEIVE_COMMENTS,
 	CREATE_COMMENT,
+	UPVOTE_COMMENT,
+	DOWNVOTE_COMMENT,
+	EDIT_COMMENT,
 	receiveComments,
 	createComment,
 	getComment,
 	upvoteComment,
-	downvoteComment
+	downvoteComment,
+	editComment
 } from './comments';
