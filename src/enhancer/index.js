@@ -53,3 +53,16 @@ export const post = (url, body, opts = {}) => {
 
 	return result;
 };
+
+export const put = (url, body, opts = {}) => {
+	const result = {
+		url,
+		opts: {
+			...opts,
+			method: 'put',
+			body: JSON.stringify(body)
+		}
+	};
+
+	return result;
+};
