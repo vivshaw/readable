@@ -69,6 +69,7 @@ export const editPost = (id, postChanges) => {
 export const deletePost = id => {
 	return {
 		type: DELETE_POST,
+		payload: id,
 		offlineAction: {
 			effect: deleteMethod(PostAPI.postEndpoint(id), postOpts)
 		}
