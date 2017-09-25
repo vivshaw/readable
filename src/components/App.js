@@ -81,8 +81,8 @@ class App extends Component {
 		if (posts) {
 			postList = map(posts, post => (
 				<li>
-					Post: {post.title}, {post.id}, {post.voteScore},{' '}
-					{post.deleted ? 'deleted' : ''}
+					Post: {post.title}, {post.id}, {post.voteScore},
+					{console.log(post.deleted)}
 				</li>
 			));
 		}
@@ -90,7 +90,8 @@ class App extends Component {
 		if (comments) {
 			commentList = map(comments, comment => (
 				<li>
-					Comment: {comment.id}, {comment.body}, {comment.voteScore}
+					Comment: {comment.id}, {comment.body}, {comment.voteScore},
+					{console.log(comment.deleted)}
 				</li>
 			));
 		}

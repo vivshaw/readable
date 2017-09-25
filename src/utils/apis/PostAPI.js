@@ -1,3 +1,5 @@
+import omit from 'lodash/omit';
+
 import { getOpts } from './apiHelpers';
 
 /*
@@ -20,7 +22,7 @@ export const getAllPosts = endpoint => () => {
 		.then(res => res.json())
 		.then(data =>
 			data.reduce((posts, post) => {
-				posts[post.id] = post;
+				posts[post.id] = omit(post, 'deleted');
 				return posts;
 			}, {})
 		);
@@ -39,7 +41,7 @@ export const getPost = endpoint => id => {
 			let post = {};
 
 			if (data.id) {
-				post[data.id] = data;
+				post[data.id] = omit(data, 'deleted');
 			} else {
 				post.error = `Post ${id} does not exist!`;
 			}
@@ -55,7 +57,7 @@ export const getPostComments = endpoint => id => {
 		.then(res => res.json())
 		.then(data =>
 			data.reduce((comments, comment) => {
-				comments[comment.id] = comment;
+				comments[comment.id] = omit(comment, 'deleted');
 				return comments;
 			}, {})
 		);
