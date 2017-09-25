@@ -28,7 +28,6 @@ export const receivePosts = posts => {
 export const createPost = newPost => {
 	const formattedPost = {};
 	formattedPost[newPost.id] = { ...newPost, voteScore: 0 };
-	console.log(formattedPost);
 
 	return {
 		type: RECEIVE_POSTS,

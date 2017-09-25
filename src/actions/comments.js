@@ -3,7 +3,6 @@ import { postOpts } from '../utils/apis/apiHelpers';
 import { CommentAPI } from '../utils/apis';
 
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
-export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const UPVOTE_COMMENT = 'UPVOTE_COMMENT';
 export const DOWNVOTE_COMMENT = 'DOWNVOTE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
@@ -17,9 +16,12 @@ export const receiveComments = comments => {
 };
 
 export const createComment = comment => {
+	const formattedComment = {};
+	formattedComment[comment.id] = { ...comment, voteScore: 0 };
+
 	return {
-		type: CREATE_COMMENT,
-		payload: comment,
+		type: RECEIVE_COMMENTS,
+		payload: formattedComment,
 		offlineAction: {
 			effect: post(CommentAPI.allCommentsEndpoint, comment, postOpts)
 		}
