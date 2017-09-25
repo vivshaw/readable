@@ -66,3 +66,13 @@ export const put = (url, body, opts = {}) => {
 
 	return result;
 };
+
+export const delete = (url, opts = {}) => {
+	return {
+		url,
+		opts: {
+			...opts,
+			method: 'delete'
+		}
+	};
+};
