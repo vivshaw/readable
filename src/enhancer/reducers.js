@@ -1,11 +1,12 @@
 // @flow
 
-import { ONLINE, TRY_OFFLINE_ACTION } from './actions';
+import { ONLINE, TRY_OFFLINE_ACTION, BUSY } from './actions';
 
 const initialState = {
 	online: navigator.onLine,
 	queuedActions: [],
-	trying: false
+	trying: false,
+	busy: false
 };
 
 const enqueue = (state, action) => {
@@ -33,11 +34,16 @@ export const queueOfflineReducer = (state: any = initialState, action: any) => {
 			};
 		case TRY_OFFLINE_ACTION:
 			return dequeue(state);
+		case BUSY:
+			return {
+				...state,
+				busy: action.payload
+			};
 		default:
-			if (state.online || !action.offlineAction) {
-				return state;
-			} else {
+			if (action.offlineAction) {
 				return enqueue(state, action);
+			} else {
+				return state;
 			}
 	}
 };

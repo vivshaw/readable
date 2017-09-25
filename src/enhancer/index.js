@@ -51,7 +51,28 @@ export const post = (url, body, opts = {}) => {
 		}
 	};
 
-	console.log('result: ', result);
+	return result;
+};
+
+export const put = (url, body, opts = {}) => {
+	const result = {
+		url,
+		opts: {
+			...opts,
+			method: 'put',
+			body: JSON.stringify(body)
+		}
+	};
 
 	return result;
+};
+
+export const deleteMethod = (url, opts = {}) => {
+	return {
+		url,
+		opts: {
+			...opts,
+			method: 'delete'
+		}
+	};
 };
