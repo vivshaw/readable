@@ -21,7 +21,7 @@ export const DELETE_POST = 'DELETE_POST';
 export const receivePosts = posts => {
 	return {
 		type: RECEIVE_POSTS,
-		payload: posts
+		posts
 	};
 };
 
@@ -31,7 +31,7 @@ export const createPost = newPost => {
 
 	return {
 		type: RECEIVE_POSTS,
-		payload: formattedPost,
+		posts: formattedPost,
 		offlineAction: {
 			effect: post(PostAPI.allPostsEndpoint, newPost, postOpts)
 		}
@@ -41,7 +41,7 @@ export const createPost = newPost => {
 export const upvote = id => {
 	return {
 		type: UPVOTE,
-		payload: id,
+		id,
 		offlineAction: {
 			effect: post(PostAPI.postEndpoint(id), { option: 'upVote' }, postOpts)
 		}
@@ -51,6 +51,7 @@ export const upvote = id => {
 export const downvote = id => {
 	return {
 		type: DOWNVOTE,
+		id,
 		offlineAction: {
 			effect: post(PostAPI.postEndpoint(id), { option: 'downVote' }, postOpts)
 		}
@@ -60,10 +61,8 @@ export const downvote = id => {
 export const editPost = (id, changes) => {
 	return {
 		type: EDIT_POST,
-		payload: {
-			id,
-			changes
-		},
+		id,
+		changes,
 		offlineAction: {
 			effect: put(PostAPI.postEndpoint(id), changes, postOpts)
 		}
@@ -73,7 +72,7 @@ export const editPost = (id, changes) => {
 export const deletePost = id => {
 	return {
 		type: DELETE_POST,
-		payload: id,
+		id,
 		offlineAction: {
 			effect: deleteMethod(PostAPI.postEndpoint(id), postOpts)
 		}
