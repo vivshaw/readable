@@ -1,9 +1,11 @@
 import { RECEIVE_COMMENTS } from '../actions';
 
 const comments = (state = {}, action) => {
+	const { id, comments, changes } = action;
+
 	switch (action.type) {
 		case RECEIVE_COMMENTS:
-			return { ...state, ...action.payload };
+			return { ...state, ...comments };
 		default:
 			return state;
 	}
