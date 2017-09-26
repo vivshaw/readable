@@ -33,13 +33,18 @@ export const receivePosts = (posts, id) => {
 
 export const createPost = newPost => {
 	const formattedPost = {};
-	formattedPost[newPost.id] = { ...newPost, voteScore: 0 };
+	const { id } = newPost;
+	formattedPost[id] = { ...newPost, voteScore: 0 };
 
 	return {
 		type: RECEIVE_POSTS,
 		posts: formattedPost,
 		offlineAction: {
-			effect: post(PostAPI.allPostsEndpoint, newPost, postOpts)
+			effect: post(PostAPI.allPostsEndpoint, newPost, postOpts),
+			rollback: {
+				type: DELETE_POST,
+				id
+			}
 		}
 	};
 };
@@ -49,7 +54,11 @@ export const upvote = id => {
 		type: UPVOTE,
 		id,
 		offlineAction: {
-			effect: post(PostAPI.postEndpoint(id), { option: 'upVote' }, postOpts)
+			effect: post(PostAPI.postEndpoint(id), { option: 'upVote' }, postOpts),
+			rollback: {
+				type: DOWNVOTE,
+				id
+			}
 		}
 	};
 };
@@ -59,28 +68,38 @@ export const downvote = id => {
 		type: DOWNVOTE,
 		id,
 		offlineAction: {
-			effect: post(PostAPI.postEndpoint(id), { option: 'downVote' }, postOpts)
+			effect: post(PostAPI.postEndpoint(id), { option: 'downVote' }, postOpts),
+			rollback: {
+				type: UPVOTE,
+				id
+			}
 		}
 	};
 };
 
-export const editPost = (id, changes) => {
+export const editPost = (post, changes) => {
+	const { id } = post;
+
 	return {
 		type: EDIT_POST,
 		id,
 		changes,
 		offlineAction: {
-			effect: put(PostAPI.postEndpoint(id), changes, postOpts)
+			effect: put(PostAPI.postEndpoint(id), changes, postOpts),
+			rollback: receivePosts({ [id]: post }, id)
 		}
 	};
 };
 
-export const deletePost = id => {
+export const deletePost = post => {
+	const { id } = post;
+
 	return {
 		type: DELETE_POST,
 		id,
 		offlineAction: {
-			effect: deleteMethod(PostAPI.postEndpoint(id), postOpts)
+			effect: deleteMethod(PostAPI.postEndpoint(id), postOpts),
+			rollback: receivePosts({ [id]: post }, id)
 		}
 	};
 };

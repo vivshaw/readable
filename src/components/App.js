@@ -81,8 +81,7 @@ class App extends Component {
 		if (posts) {
 			postList = map(posts, post => (
 				<li>
-					Post: {post.title}, {post.id}, {post.voteScore},
-					{console.log(post.deleted)}
+					Post: {post.title}, {post.id}, {post.voteScore}
 				</li>
 			));
 		}
@@ -90,8 +89,7 @@ class App extends Component {
 		if (comments) {
 			commentList = map(comments, comment => (
 				<li>
-					Comment: {comment.id}, {comment.body}, {comment.voteScore},
-					{console.log(comment.deleted)}
+					Comment: {comment.id}, {comment.body}, {comment.voteScore}
 				</li>
 			));
 		}
@@ -113,12 +111,15 @@ class App extends Component {
 					<button onClick={() => getPost(testId)}>Get Test Post</button>
 					<button onClick={() => voteUp(testId)}>Upvote Test Post</button>
 					<button onClick={() => voteDown(testId)}>Downvote Test Post</button>
-					<button onClick={() => deleteTestPost(testId)}>
+					<button onClick={() => deleteTestPost(posts[testId])}>
 						Delete Test Post
 					</button>
 					<button
 						onClick={() =>
-							editTestPost(testId, { title: 'Edited!', body: 'Edited body!' })}
+							editTestPost(posts[testId], {
+								title: 'Edited!',
+								body: 'Edited body!'
+							})}
 					>
 						Edit Test Post
 					</button>
