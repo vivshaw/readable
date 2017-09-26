@@ -1,4 +1,4 @@
-import { tryOfflineAction, busy } from './actions';
+import { completeOfflineAction, busy } from './actions';
 
 const waitFor = timeout => {
 	return new Promise(resolve => setTimeout(resolve, timeout));
@@ -6,9 +6,7 @@ const waitFor = timeout => {
 
 const doEffect = (action, dispatch) => {
 	const effect = action.offlineAction.effect;
-	fetch(effect.url, effect.opts)
-		.then(res => res.json())
-		.then(data => console.log(data));
+	return fetch(effect.url, effect.opts).then(res => res.json());
 };
 
 export const queueOfflineMiddleware = (store: any) => (next: any) => (
@@ -25,11 +23,24 @@ export const queueOfflineMiddleware = (store: any) => (next: any) => (
 		!queue_offline.busy
 	) {
 		store.dispatch(busy(true));
-		waitFor(3000).then(() => {
-			doEffect(queue_offline.queuedActions[0], store.dispatch);
-			store.dispatch(tryOfflineAction());
-			store.dispatch(busy(false));
-		});
+		const currentAction = queue_offline.queuedActions[0];
+
+		doEffect(currentAction, store.dispatch)
+			.then(data => {
+				console.log(data);
+				store.dispatch(completeOfflineAction());
+				store.dispatch(busy(false));
+			})
+			.catch(error => {
+				console.log(error);
+
+				if (currentAction.offlineAction.rollback) {
+					store.dispatch(currentAction.offlineAction.rollback);
+				}
+
+				store.dispatch(completeOfflineAction());
+				store.dispatch(busy(false));
+			});
 	}
 
 	return result;

@@ -1,21 +1,21 @@
 export const ONLINE = '@@ONLINE';
 export const BUSY = '@@BUSY';
-export const TRY_OFFLINE_ACTION = 'TRY_OFFLINE_ACTION';
+export const COMPLETE_OFFLINE_ACTION = 'COMPLETE_OFFLINE_ACTION';
 
 export const updateOnline = (online: boolean) => ({
 	type: ONLINE,
 	payload: online
 });
 
-export const tryOfflineAction = () => {
+export const completeOfflineAction = () => {
 	return {
-		type: TRY_OFFLINE_ACTION
+		type: COMPLETE_OFFLINE_ACTION
 	};
 };
 
 export const busy = busyState => {
 	return {
 		type: BUSY,
-		payload: busyState
+		busyState
 	};
 };
