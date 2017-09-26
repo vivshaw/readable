@@ -134,12 +134,12 @@ class App extends Component {
 					<button onClick={() => fetchComment(testCommentId)}>
 						Get Test Comment
 					</button>
-					<button onClick={() => deleteTestComment(testCommentId)}>
+					<button onClick={() => deleteTestComment(comments[testCommentId])}>
 						Delete Test Comment
 					</button>
 					<button
 						onClick={() =>
-							editTestComment(testCommentId, {
+							editTestComment(comments[testCommentId], {
 								timestamp: Date.now(),
 								body: 'Edited body!'
 							})}

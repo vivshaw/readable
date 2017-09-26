@@ -27,14 +27,20 @@ export const receiveComments = (comments, id) => {
 
 export const createComment = comment => {
 	const formattedComment = {};
-	formattedComment[comment.id] = { ...comment, voteScore: 0 };
+	const { id } = comment;
+
+	formattedComment[id] = { ...comment, voteScore: 0 };
 
 	return {
 		type: RECEIVE_COMMENTS,
 		comments: formattedComment,
-		id: comment.id,
+		id,
 		offlineAction: {
-			effect: post(CommentAPI.allCommentsEndpoint, comment, postOpts)
+			effect: post(CommentAPI.allCommentsEndpoint, comment, postOpts),
+			rollback: {
+				type: DELETE_COMMENT,
+				id
+			}
 		}
 	};
 };
@@ -48,7 +54,11 @@ export const upvoteComment = id => {
 				CommentAPI.commentEndpoint(id),
 				{ option: 'upVote' },
 				postOpts
-			)
+			),
+			rollback: {
+				type: DOWNVOTE_COMMENT,
+				id
+			}
 		}
 	};
 };
@@ -62,28 +72,38 @@ export const downvoteComment = id => {
 				CommentAPI.commentEndpoint(id),
 				{ option: 'downVote' },
 				postOpts
-			)
+			),
+			rollback: {
+				type: UPVOTE_COMMENT,
+				id
+			}
 		}
 	};
 };
 
-export const editComment = (id, changes) => {
+export const editComment = (comment, changes) => {
+	const { id } = comment;
+
 	return {
 		type: EDIT_COMMENT,
 		id,
 		changes,
 		offlineAction: {
-			effect: put(CommentAPI.commentEndpoint(id), changes, postOpts)
+			effect: put(CommentAPI.commentEndpoint(id), changes, postOpts),
+			rollback: receiveComments({ [id]: comment }, id)
 		}
 	};
 };
 
-export const deleteComment = (id, commentChanges) => {
+export const deleteComment = comment => {
+	const { id } = comment;
+
 	return {
 		type: DELETE_COMMENT,
 		id,
 		offlineAction: {
-			effect: deleteMethod(CommentAPI.commentEndpoint(id), postOpts)
+			effect: deleteMethod(CommentAPI.commentEndpoint(id), postOpts),
+			rollback: receiveComments({ [id]: comment }, id)
 		}
 	};
 };
