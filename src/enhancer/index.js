@@ -8,7 +8,7 @@ import { checkBrowserOnline } from './utils';
 
 /* Flow types */
 
-type HeaderType = { [string]: string };
+export type HeaderType = { [string]: string | HeaderType };
 
 export const queueOffline = (persist: any) => (createStore: any) => (
 	reducer: any,
