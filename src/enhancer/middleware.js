@@ -1,10 +1,12 @@
+//@flow
+
 import { completeOfflineAction, busy } from './actions';
 
-const waitFor = timeout => {
+const waitFor = (timeout: number) => {
 	return new Promise(resolve => setTimeout(resolve, timeout));
 };
 
-const doEffect = (action, dispatch) => {
+const doEffect = (action: any, dispatch: any) => {
 	const effect = action.offlineAction.effect;
 	return fetch(effect.url, effect.opts).then(res => res.json());
 };
