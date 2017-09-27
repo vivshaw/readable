@@ -8,11 +8,13 @@ import { EndpointType, GetType } from './index';
  | Endpoints
  */
 
-export const allCommentsEndpoint: EndpointType = endpoint: string => {
+export const allCommentsEndpoint: EndpointType = (endpoint: string) => {
 	return `${endpoint}`;
 };
 
-export const commentEndpoint: EndpointType = (endpoint: string) => (id: string) => {
+export const commentEndpoint: EndpointType = (endpoint: string) => (
+	id: string
+) => {
 	return `${endpoint}/${id}`;
 };
 
