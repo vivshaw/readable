@@ -2,22 +2,24 @@ import omit from 'lodash/omit';
 
 import { getOpts } from './apiHelpers';
 
+import { EndpointType, GetType } from './index';
+
 /*
  | Endpoints
  */
 
-export const allPostsEndpoint = endpoint => endpoint;
+export const allPostsEndpoint: EndpointType = endpoint => endpoint;
 
-export const postEndpoint = endpoint => id => `${endpoint}/${id}`;
+export const postEndpoint: EndpointType = endpoint => id => `${endpoint}/${id}`;
 
-export const postCommentEndpoint = endpoint => id =>
+export const postCommentEndpoint: EndpointType = endpoint => id =>
 	`${endpoint}/${id}/comments`;
 
 /*
  | Top endpoint, /posts
  */
 
-export const getAllPosts = endpoint => () => {
+export const getAllPosts: GetType = endpoint => () => {
 	return fetch(endpoint, getOpts)
 		.then(res => res.json())
 		.then(data =>
@@ -32,7 +34,7 @@ export const getAllPosts = endpoint => () => {
  | Sub endpoint, /posts/:id
  */
 
-export const getPost = endpoint => id => {
+export const getPost: GetType = endpoint => id => {
 	const thisPostEndpoint = `${endpoint}/${id}`;
 
 	return fetch(thisPostEndpoint, getOpts)
@@ -50,7 +52,7 @@ export const getPost = endpoint => id => {
 		});
 };
 
-export const getPostComments = endpoint => id => {
+export const getPostComments: GetType = endpoint => id => {
 	const thisPostEndpoint = `${endpoint}/${id}/comments`;
 
 	return fetch(thisPostEndpoint, getOpts)

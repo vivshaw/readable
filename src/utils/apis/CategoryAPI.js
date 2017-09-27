@@ -1,10 +1,12 @@
 import { getOpts } from './apiHelpers';
 
+import { EndpointType, GetType } from './index';
+
 /*
  | Endpoints
  */
 
-export const categoryEndpoint = endpoint => {
+export const categoryEndpoint: EndpointType = (endpoint: string) => {
 	return `${endpoint}/categories`;
 };
 
@@ -12,7 +14,7 @@ export const categoryEndpoint = endpoint => {
  | Top endpoint, /categories
  */
 
-export const getAllCategories = endpoint => () => {
+export const getAllCategories: EndpointType = (endpoint: string) => () => {
 	const categoriesEndpoint = `${endpoint}/categories`;
 
 	return fetch(categoriesEndpoint, getOpts).then(res => res.json());
@@ -22,7 +24,9 @@ export const getAllCategories = endpoint => () => {
  | Sub endpoint, /:category/posts
  */
 
-export const getCategoryPosts = endpoint => category => {
+export const getCategoryPosts: GetType = (endpoint: string) => (
+	category: string
+) => {
 	const categoryPostEndpoint = `${endpoint}/${category}/posts`;
 
 	return fetch(categoryPostEndpoint, getOpts)
