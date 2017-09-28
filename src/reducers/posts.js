@@ -1,3 +1,5 @@
+// @flow
+
 import omit from 'lodash/omit';
 
 import {
@@ -8,7 +10,9 @@ import {
 	DOWNVOTE
 } from '../actions';
 
-const posts = (state = {}, action) => {
+import type { PostsWrapper_T } from '../utils/types';
+
+const posts = (state: PostsWrapper_T = {}, action: any) => {
 	const { id, posts, changes } = action;
 
 	switch (action.type) {

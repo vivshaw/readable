@@ -26,7 +26,7 @@ export type Comment_T = {
 	body: string,
 	author: string,
 	parentId: string,
-	voteScore: string
+	voteScore: number
 };
 
 /* An object with keys corresponding to comment ids and values that are the comment with that id */

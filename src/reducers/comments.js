@@ -1,3 +1,5 @@
+// @flow
+
 import omit from 'lodash/omit';
 
 import {
@@ -8,7 +10,9 @@ import {
 	DOWNVOTE_COMMENT
 } from '../actions';
 
-const comments = (state = {}, action) => {
+import type { CommentsWrapper_T } from '../utils/types';
+
+const comments = (state: CommentsWrapper_T = {}, action: any) => {
 	const { id, comments, changes } = action;
 
 	switch (action.type) {
