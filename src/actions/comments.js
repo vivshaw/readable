@@ -1,8 +1,18 @@
+// @flow
+
 import { post, put, deleteMethod } from '../enhancer';
 import { postOpts } from '../utils/apis/apiHelpers';
 import { CommentAPI } from '../utils/apis';
 
-export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
+import type {
+	Post_T,
+	Comment_T,
+	CommentsWrapper_T,
+	CommentChanges_T,
+	ReceiveComments_T
+} from '../utils/types';
+
+export const RECEIVE_COMMENTS: 'RECEIVE_COMMENTS' = 'RECEIVE_COMMENTS';
 export const UPVOTE_COMMENT = 'UPVOTE_COMMENT';
 export const DOWNVOTE_COMMENT = 'DOWNVOTE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
@@ -10,8 +20,8 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 /* Plain actions */
 
-export const receiveComments = (comments, id) => {
-	let action = {
+export const receiveComments = (comments: CommentsWrapper_T, id: string) => {
+	let action: ReceiveComments_T = {
 		type: RECEIVE_COMMENTS,
 		comments
 	};
@@ -25,7 +35,7 @@ export const receiveComments = (comments, id) => {
 
 /* Offline actions */
 
-export const createComment = comment => {
+export const createComment = (comment: Comment_T) => {
 	const formattedComment = {};
 	const { id } = comment;
 
@@ -45,7 +55,7 @@ export const createComment = comment => {
 	};
 };
 
-export const upvoteComment = id => {
+export const upvoteComment = (id: string) => {
 	return {
 		type: UPVOTE_COMMENT,
 		id,
@@ -63,7 +73,7 @@ export const upvoteComment = id => {
 	};
 };
 
-export const downvoteComment = id => {
+export const downvoteComment = (id: string) => {
 	return {
 		type: DOWNVOTE_COMMENT,
 		id,
@@ -81,7 +91,7 @@ export const downvoteComment = id => {
 	};
 };
 
-export const editComment = (comment, changes) => {
+export const editComment = (comment: Comment_T, changes: CommentChanges_T) => {
 	const { id } = comment;
 
 	return {
@@ -95,7 +105,7 @@ export const editComment = (comment, changes) => {
 	};
 };
 
-export const deleteComment = comment => {
+export const deleteComment = (comment: Comment_T) => {
 	const { id } = comment;
 
 	return {
@@ -110,7 +120,7 @@ export const deleteComment = comment => {
 
 /* Thunks */
 
-export const getComment = id => dispatch => {
+export const getComment = (id: string) => (dispatch: any) => {
 	CommentAPI.getComment(id).then(comment =>
 		dispatch(receiveComments(comment, id))
 	);
