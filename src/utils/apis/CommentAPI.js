@@ -1,24 +1,26 @@
+// @flow
+
 import omit from 'lodash/omit';
 
 import { getOpts } from './apiHelpers';
 
-import { EndpointType, GetType } from './index';
+import type { Endpoint_T, Get_T } from './index';
 
 /*
  | Endpoints
  */
 
-export const allCommentsEndpoint: EndpointType = (endpoint: string) => {
+export const allCommentsEndpoint: Endpoint_T = (endpoint: string) => {
 	return `${endpoint}`;
 };
 
-export const commentEndpoint: EndpointType = (endpoint: string) => (
+export const commentEndpoint: Endpoint_T = (endpoint: string) => (
 	id: string
 ) => {
 	return `${endpoint}/${id}`;
 };
 
-export const getComment: GetType = (endpoint: string) => (id: string) => {
+export const getComment: Get_T = (endpoint: string) => (id: string) => {
 	const thisCommentEndpoint = `${endpoint}/${id}`;
 
 	return fetch(thisCommentEndpoint, getOpts)

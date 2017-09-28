@@ -1,7 +1,5 @@
 // @flow
 
-import map from 'lodash/map';
-
 import { CategoryAPI } from '../utils/apis';
 import { receivePosts } from './posts';
 
@@ -27,9 +25,9 @@ export const receiveCategories = (categories: Array<string>) => {
  */
 
 export const fetchCategories = () => (dispatch: any) =>
-	CategoryAPI.getAllCategories()
-		.then(data => map(data.categories, 'name'))
-		.then(categoryNames => dispatch(receiveCategories(categoryNames)));
+	CategoryAPI.getAllCategories().then(categories =>
+		dispatch(receiveCategories(categories))
+	);
 
 export const fetchCategoryPosts = (category: string) => (dispatch: any) =>
 	CategoryAPI.getCategoryPosts(category).then(data =>

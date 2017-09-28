@@ -2,7 +2,7 @@
 
 import reduce from 'lodash/reduce';
 
-import type { ApiType } from './index';
+import type { API_T } from './index';
 
 export const getOpts = {
 	headers: { Authorization: 'whatever-you-want' }
@@ -15,7 +15,7 @@ export const postOpts = {
 	}
 };
 
-export const bindApiToEndpoint = (api: ApiType) => (endpoint: string) =>
+export const bindApiToEndpoint = (api: API_T) => (endpoint: string) =>
 	reduce(
 		api,
 		(bound, apiFunc, apiName) => {

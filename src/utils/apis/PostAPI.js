@@ -1,25 +1,29 @@
+// @flow
+
 import omit from 'lodash/omit';
 
 import { getOpts } from './apiHelpers';
 
-import { EndpointType, GetType } from './index';
+import type { Endpoint_T, Get_T } from './index';
 
 /*
  | Endpoints
  */
 
-export const allPostsEndpoint: EndpointType = endpoint => endpoint;
+export const allPostsEndpoint: Endpoint_T = (endpoint: string) => endpoint;
 
-export const postEndpoint: EndpointType = endpoint => id => `${endpoint}/${id}`;
+export const postEndpoint: Endpoint_T = (endpoint: string) => (id: string) =>
+	`${endpoint}/${id}`;
 
-export const postCommentEndpoint: EndpointType = endpoint => id =>
-	`${endpoint}/${id}/comments`;
+export const postCommentEndpoint: Endpoint_T = (endpoint: string) => (
+	id: string
+) => `${endpoint}/${id}/comments`;
 
 /*
  | Top endpoint, /posts
  */
 
-export const getAllPosts: GetType = endpoint => () => {
+export const getAllPosts: Get_T = (endpoint: string) => () => {
 	return fetch(endpoint, getOpts)
 		.then(res => res.json())
 		.then(data =>
@@ -34,7 +38,7 @@ export const getAllPosts: GetType = endpoint => () => {
  | Sub endpoint, /posts/:id
  */
 
-export const getPost: GetType = endpoint => id => {
+export const getPost: Get_T = (endpoint: string) => (id: string) => {
 	const thisPostEndpoint = `${endpoint}/${id}`;
 
 	return fetch(thisPostEndpoint, getOpts)
@@ -52,7 +56,7 @@ export const getPost: GetType = endpoint => id => {
 		});
 };
 
-export const getPostComments: GetType = endpoint => id => {
+export const getPostComments: Get_T = (endpoint: string) => (id: string) => {
 	const thisPostEndpoint = `${endpoint}/${id}/comments`;
 
 	return fetch(thisPostEndpoint, getOpts)
