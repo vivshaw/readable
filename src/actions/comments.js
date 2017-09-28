@@ -5,7 +5,6 @@ import { postOpts } from '../utils/apis/apiHelpers';
 import { CommentAPI } from '../utils/apis';
 
 import type {
-	Post_T,
 	Comment_T,
 	CommentsWrapper_T,
 	CommentChanges_T,
@@ -20,7 +19,7 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 /* Plain actions */
 
-export const receiveComments = (comments: CommentsWrapper_T, id: string) => {
+export const receiveComments = (comments: CommentsWrapper_T, id?: string) => {
 	let action: ReceiveComments_T = {
 		type: RECEIVE_COMMENTS,
 		comments
