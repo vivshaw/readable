@@ -1,3 +1,5 @@
+// @flow
+
 export {
 	GET_CATEGORIES,
 	receiveCategories,

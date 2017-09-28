@@ -6,6 +6,10 @@ import { enhanceReducer } from './reducers';
 import { queueOfflineMiddleware } from './middleware';
 import { checkBrowserOnline } from './utils';
 
+/* Flow types */
+
+export type HeaderType = { [string]: string | HeaderType };
+
 export const queueOffline = (persist: any) => (createStore: any) => (
 	reducer: any,
 	preloadedState: any,
@@ -32,7 +36,7 @@ export const queueOffline = (persist: any) => (createStore: any) => (
 	return store;
 };
 
-export const get = (url, opts = {}) => {
+export const get = (url: string, opts: ?HeaderType = {}) => {
 	return {
 		url,
 		opts: {
@@ -41,7 +45,7 @@ export const get = (url, opts = {}) => {
 	};
 };
 
-export const post = (url, body, opts = {}) => {
+export const post = (url: string, body: any, opts: ?HeaderType = {}) => {
 	const result = {
 		url,
 		opts: {
@@ -54,7 +58,7 @@ export const post = (url, body, opts = {}) => {
 	return result;
 };
 
-export const put = (url, body, opts = {}) => {
+export const put = (url: string, body: any, opts: ?HeaderType = {}) => {
 	const result = {
 		url,
 		opts: {
@@ -67,7 +71,7 @@ export const put = (url, body, opts = {}) => {
 	return result;
 };
 
-export const deleteMethod = (url, opts = {}) => {
+export const deleteMethod = (url: string, opts: ?HeaderType = {}) => {
 	return {
 		url,
 		opts: {

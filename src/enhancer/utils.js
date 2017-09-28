@@ -1,3 +1,5 @@
+// @flow
+
 import { updateOnline } from './actions';
 
 export const checkBrowserOnline = (dispatch: any, getState: any) => (

@@ -2,22 +2,32 @@
 
 import { ONLINE, COMPLETE_OFFLINE_ACTION, BUSY } from './actions';
 
-const initialState = {
+/* Flow types */
+
+type queueOfflineState = {
+	online: boolean,
+	queuedActions: Array<any>,
+	trying: boolean,
+	busy: boolean
+};
+
+const initialState: queueOfflineState = {
 	online: navigator.onLine,
 	queuedActions: [],
 	trying: false,
 	busy: false
 };
 
-const enqueue = (state, action) => {
+const enqueue = (state: queueOfflineState, action: any) => {
 	const queue = state.queuedActions;
+
 	return {
 		...state,
 		queuedActions: [...queue, action]
 	};
 };
 
-const dequeue = state => {
+const dequeue = (state: queueOfflineState) => {
 	const [, ...rest] = state.queuedActions;
 	return {
 		...state,
@@ -25,7 +35,10 @@ const dequeue = state => {
 	};
 };
 
-export const queueOfflineReducer = (state: any = initialState, action: any) => {
+export const queueOfflineReducer = (
+	state: queueOfflineState = initialState,
+	action: any
+) => {
 	switch (action.type) {
 		case ONLINE:
 			return {

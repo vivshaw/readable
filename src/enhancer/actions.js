@@ -1,3 +1,5 @@
+// @flow
+
 export const ONLINE = '@@ONLINE';
 export const BUSY = '@@BUSY';
 export const COMPLETE_OFFLINE_ACTION = 'COMPLETE_OFFLINE_ACTION';
@@ -13,7 +15,7 @@ export const completeOfflineAction = () => {
 	};
 };
 
-export const busy = busyState => {
+export const busy = (busyState: boolean) => {
 	return {
 		type: BUSY,
 		busyState

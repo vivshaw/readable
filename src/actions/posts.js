@@ -1,8 +1,17 @@
+// @flow
+
 import { post, put, deleteMethod } from '../enhancer';
 import { postOpts } from '../utils/apis/apiHelpers';
 import { PostAPI } from '../utils/apis';
 
 import { receiveComments } from './comments';
+
+import type {
+	Post_T,
+	PostsWrapper_T,
+	PostChanges_T,
+	ReceivePosts_T
+} from '../utils/types';
 
 /*
  | Action types
@@ -18,8 +27,8 @@ export const DELETE_POST = 'DELETE_POST';
  | Plain actions
  */
 
-export const receivePosts = (posts, id) => {
-	let action = {
+export const receivePosts = (posts: PostsWrapper_T, id?: string) => {
+	let action: ReceivePosts_T = {
 		type: RECEIVE_POSTS,
 		posts
 	};
@@ -31,7 +40,7 @@ export const receivePosts = (posts, id) => {
 	return action;
 };
 
-export const createPost = newPost => {
+export const createPost = (newPost: Post_T) => {
 	const formattedPost = {};
 	const { id } = newPost;
 	formattedPost[id] = { ...newPost, voteScore: 0 };
@@ -49,7 +58,7 @@ export const createPost = newPost => {
 	};
 };
 
-export const upvote = id => {
+export const upvote = (id: string) => {
 	return {
 		type: UPVOTE,
 		id,
@@ -63,7 +72,7 @@ export const upvote = id => {
 	};
 };
 
-export const downvote = id => {
+export const downvote = (id: string) => {
 	return {
 		type: DOWNVOTE,
 		id,
@@ -77,7 +86,7 @@ export const downvote = id => {
 	};
 };
 
-export const editPost = (post, changes) => {
+export const editPost = (post: Post_T, changes: PostChanges_T) => {
 	const { id } = post;
 
 	return {
@@ -91,7 +100,7 @@ export const editPost = (post, changes) => {
 	};
 };
 
-export const deletePost = post => {
+export const deletePost = (post: Post_T) => {
 	const { id } = post;
 
 	return {
@@ -108,17 +117,17 @@ export const deletePost = post => {
  | Thunks
  */
 
-export const fetchAllPosts = () => dispatch => {
+export const fetchAllPosts = () => (dispatch: any) => {
 	PostAPI.getAllPosts().then(posts => dispatch(receivePosts(posts)));
 };
 
-export const fetchPost = id => dispatch => {
+export const fetchPost = (id: string) => (dispatch: any) => {
 	PostAPI.getPost(id).then(post => {
 		dispatch(receivePosts(post, id));
 	});
 };
 
-export const fetchPostComments = id => dispatch => {
+export const fetchPostComments = (id: string) => (dispatch: any) => {
 	PostAPI.getPostComments(id).then(comments =>
 		dispatch(receiveComments(comments))
 	);
