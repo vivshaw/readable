@@ -15,12 +15,7 @@ class Post extends Component {
 	}
 
 	render() {
-		return (
-			<div>
-				<p>aaaaaaaaaaaaaaaaaaa</p>
-				{this.props.post && <p>{this.props.post.title}</p>}
-			</div>
-		);
+		return <div>{this.props.post && <p>{this.props.post.title}</p>}</div>;
 	}
 }
 
