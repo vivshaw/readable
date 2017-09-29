@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import Home from './Home';
 import Category from './Category';
+import Post from './Post';
 
 class App extends Component {
 	render() {
@@ -12,6 +13,7 @@ class App extends Component {
 				<Switch>
 					<Route exact path="/" component={Home} />
 					<Route path="/category/:category" component={Category} />
+					<Route path="/posts/:post" component={Post} />
 					{/*<Route exact path="/test2" component={Home} /> */}
 				</Switch>
 			</BrowserRouter>

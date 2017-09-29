@@ -9,14 +9,18 @@ import map from 'lodash/map';
 
 import { fetchCategoryPosts } from '../actions';
 
-class Home extends Component {
+class Category extends Component {
 	componentDidMount() {
 		this.props.getPosts();
 	}
 
 	render() {
 		const posts = map(this.props.posts, post => {
-			return <div>{post.title}</div>;
+			return (
+				<div>
+					<Link to={`/posts/${post.id}`}>{post.title}</Link>
+				</div>
+			);
 		});
 
 		return (
@@ -46,4 +50,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	};
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));
+export default connect(mapStateToProps, mapDispatchToProps)(Category);
