@@ -42,7 +42,7 @@ class Category extends Component {
 
 			return (
 				<div key={id}>
-					<Link to={`/posts/${id}`}>{title}</Link>
+					<Link to={`/${category}/${id}`}>{title}</Link>
 					<p>Author: {author}</p>
 					<p>
 						{voteScore} <button onClick={() => voteUp(id)}>up</button>{' '}
