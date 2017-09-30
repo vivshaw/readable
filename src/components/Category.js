@@ -16,6 +16,8 @@ import {
 	downvote
 } from '../actions';
 
+import type { CommentsWrapper_T, PostsWrapper_T } from '../utils/types';
+
 class Category extends Component {
 	componentDidMount() {
 		this.props.getPosts();
@@ -62,11 +64,18 @@ class Category extends Component {
 	}
 }
 
-const mapStateToProps = ({ posts, comments }, ownProps) => {
-	const category = ownProps.match.params.category;
-	const categoryPosts = filter(posts, post => post.category === category);
-	const postIds = map(categoryPosts, 'id');
-	const commentsByPost = reduce(
+const selectPostsByCategory = (posts: PostsWrapper_T, category: string) =>
+	filter(posts, post => post.category === category);
+
+const selectPostIds = (posts: PostsWrapper_T) => map(posts, 'id');
+
+const groupCommentsByPosts = (
+	comments: CommentsWrapper_T,
+	posts: PostsWrapper_T
+) => {
+	const postIds = selectPostIds(posts);
+
+	return reduce(
 		comments,
 		(byParent, { parentId, id }) => {
 			if (postIds.includes(parentId)) {
@@ -77,10 +86,14 @@ const mapStateToProps = ({ posts, comments }, ownProps) => {
 		},
 		{}
 	);
+};
+
+const mapStateToProps = ({ posts, comments }, ownProps) => {
+	const category = ownProps.match.params.category;
 
 	return {
-		posts: categoryPosts,
-		commentsByPost: commentsByPost
+		posts: selectPostsByCategory(posts, category),
+		commentsByPost: groupCommentsByPosts(comments, posts)
 	};
 };
 
