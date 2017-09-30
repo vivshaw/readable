@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 const Home = props => {
 	const categories = props.categories.map(category => (
-		<Link to={`category/${category}`}>{category}</Link>
+		<Link to={`/${category}`}>{category}</Link>
 	));
 
 	return <div>{categories}</div>;
