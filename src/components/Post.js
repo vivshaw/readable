@@ -1,13 +1,19 @@
 // @flow
 
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import filter from 'lodash/filter';
-import map from 'lodash/map';
 
-import { fetchPost } from '../actions';
+import {
+	fetchPost,
+	upvote,
+	downvote,
+	upvoteComment,
+	downvoteComment
+} from '../actions';
+
+import type { CommentsWrapper_T, PostsWrapper_T } from '../utils/types';
 
 class Post extends Component {
 	componentWillMount() {
@@ -15,15 +21,42 @@ class Post extends Component {
 	}
 
 	render() {
-		return <div>{this.props.post && <p>{this.props.post.title}</p>}</div>;
+		const { post, comments, voteUpComment, voteDownComment } = this.props;
+
+		const commentList = comments.map(comment => (
+			<li>
+				{comment.body}, {comment.author}, {comment.voteScore}{' '}
+				<button onClick={() => voteUpComment(comment.id)}>up</button>{' '}
+				<button onClick={() => voteDownComment(comment.id)}>down</button>
+			</li>
+		));
+
+		return (
+			<div>
+				{post && (
+					<div>
+						<p>{post.title}</p>
+						<p>{post.author}</p>
+						<p>{post.body}</p>
+						<p>{post.voteScore}</p>
+					</div>
+				)}
+				<h3>Comments</h3>
+				<ul>{commentList}</ul>
+			</div>
+		);
 	}
 }
 
-const mapStateToProps = (state, ownProps) => {
+const selectCommentsByPost = (postId: string, comments: CommentsWrapper_T) =>
+	filter(comments, comment => comment.parentId === postId);
+
+const mapStateToProps = ({ posts, comments }, ownProps) => {
 	const post = ownProps.match.params.post;
 
 	return {
-		post: state.posts[post]
+		post: posts[post],
+		comments: selectCommentsByPost(post, comments)
 	};
 };
 
@@ -33,6 +66,21 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		getPost() {
 			dispatch(fetchPost(post));
+		},
+		voteUp(id) {
+			dispatch(upvote(id));
+		},
+
+		voteDown(id) {
+			dispatch(downvote(id));
+		},
+
+		voteUpComment(id) {
+			dispatch(upvoteComment(id));
+		},
+
+		voteDownComment(id) {
+			dispatch(downvoteComment(id));
 		}
 	};
 };
