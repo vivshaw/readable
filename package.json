@@ -5,6 +5,7 @@
 	"dependencies": {
 		"flow-bin": "^0.55.0",
 		"lodash": "^4.17.4",
+		"material-ui": "^0.19.2",
 		"pouchdb": "^6.3.4",
 		"react": "^15.6.1",
 		"react-dom": "^15.6.1",
@@ -15,6 +16,7 @@
 		"redux": "^3.7.2",
 		"redux-pouchdb": "^0.1.1",
 		"redux-thunk": "^2.2.0",
+		"tachyons-components": "^1.0.0-1",
 		"uuid": "^3.1.0"
 	},
 	"scripts": {
