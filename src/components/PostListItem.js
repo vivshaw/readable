@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import TimeAgo from 'react-timeago';
 
 const ListItem = styled.li`
 	margin-bottom: 16px;
@@ -33,7 +34,7 @@ const MetaLink = styled(Link)`
 const VoteButtons = styled.div`margin-left: 10px;`;
 
 const PostListItem = props => {
-	const { id, author, title, voteScore, category } = props.post;
+	const { id, author, title, voteScore, category, timestamp } = props.post;
 	const { upvote, downvote, comments } = props;
 
 	return (
@@ -50,7 +51,8 @@ const PostListItem = props => {
 					</PostTitle>
 
 					<PostMeta>
-						{voteScore} points by <Author>{author}</Author> X minutes ago |{' '}
+						{voteScore} points by <Author>{author}</Author>{' '}
+						<TimeAgo date={timestamp} /> |{' '}
 						<MetaLink to={`/${category}/${id}`}>discuss</MetaLink>{' '}
 					</PostMeta>
 				</VoteButtons>
