@@ -6795,10 +6795,6 @@ table@^4.0.1:
     slice-ansi "0.0.4"
     string-width "^2.0.0"
 
-tachyons-components@^1.0.0-1:
-  version "1.0.0-1"
-  resolved "https://registry.yarnpkg.com/tachyons-components/-/tachyons-components-1.0.0-1.tgz#2a82263151552ac1e64f3607b71a05e278f78538"
-
 tapable@^0.2.7:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-0.2.8.tgz#99372a5c999bf2df160afc0d74bed4f47948cd22"
