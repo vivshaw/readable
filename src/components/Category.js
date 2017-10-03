@@ -54,7 +54,6 @@ class Category extends Component {
 				commentsByPost={commentsByPost}
 				voteUp={voteUp}
 				voteDown={voteDown}
-				category={category}
 			/>
 		);
 	}

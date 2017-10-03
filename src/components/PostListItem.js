@@ -31,8 +31,8 @@ const MetaLink = styled(Link)`
 const VoteButtons = styled.div`margin-left: 10px;`;
 
 const PostListItem = props => {
-	const { id, author, title, voteScore } = props.post;
-	const { upvote, downvote, comments, category } = props;
+	const { id, author, title, voteScore, category } = props.post;
+	const { upvote, downvote, comments } = props;
 
 	return (
 		<div style={{ display: 'list-item', margin: '0px', padding: '0px' }}>

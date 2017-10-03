@@ -29,7 +29,7 @@ const PostListWrapper = styled.ol`
 	list-style-position: outside;
 `;
 
-const PostList = ({ commentsByPost, posts, category, voteUp, voteDown }) => {
+const PostList = ({ commentsByPost, posts, voteUp, voteDown }) => {
 	const postList = map(posts, post => {
 		const comments = commentsByPost[post.id] || [];
 
@@ -38,7 +38,6 @@ const PostList = ({ commentsByPost, posts, category, voteUp, voteDown }) => {
 				key={post.id}
 				post={post}
 				comments={comments}
-				category={category}
 				upvote={() => voteUp(post.id)}
 				downvote={() => voteDown(post.id)}
 			/>
