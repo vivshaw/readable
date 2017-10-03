@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const HeaderWrapper = styled.div`
-	background-color: #222222;
-	color: #96ccff;
+	background-color: #a463f2;
+	color: #ffffff;
 	padding: 6px;
 `;
 
@@ -15,7 +15,7 @@ const HeaderLink = styled(Link)`
 
 const Logo = styled.div`
 	display: inline-block;
-	border: 1px solid #96ccff;
+	border: 1px solid #ffffff;
 	width: 18px;
 	height: 18px;
 	font-weight: bold;
