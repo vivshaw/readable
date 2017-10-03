@@ -46,11 +46,7 @@ const PostList = ({ commentsByPost, posts, voteUp, voteDown }) => {
 
 	return (
 		<div>
-			<PostListWrapper>
-				{postList}
-				{postList}
-				{postList}
-			</PostListWrapper>
+			<PostListWrapper>{postList}</PostListWrapper>
 			<div style={{ clear: 'both' }} />
 		</div>
 	);
