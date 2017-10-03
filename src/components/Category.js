@@ -20,7 +20,13 @@ import type { CommentsWrapper_T, PostsWrapper_T } from '../utils/types';
 
 class Category extends Component {
 	componentDidMount() {
-		this.props.getPosts();
+		this.props.initializePosts();
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.category !== this.props.category) {
+			this.props.getPosts(nextProps.category);
+		}
 	}
 
 	componentWillUpdate(nextProps) {
@@ -28,6 +34,8 @@ class Category extends Component {
 			const newPosts = difference(nextProps.posts, this.props.posts);
 			newPosts.map(post => this.props.getPostComments(post.id));
 		}
+
+		console.log(nextProps.posts);
 	}
 
 	render() {
@@ -92,16 +100,21 @@ const mapStateToProps = ({ posts, comments }, ownProps) => {
 	const category = ownProps.match.params.category;
 
 	return {
+		category,
 		posts: selectPostsByCategory(posts, category),
 		commentsByPost: groupCommentsByPosts(comments, posts)
 	};
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-	const category = ownProps.match.params.category;
+	const ownCategory = ownProps.match.params.category;
 
 	return {
-		getPosts() {
+		initializePosts() {
+			dispatch(fetchCategoryPosts(ownCategory));
+		},
+
+		getPosts(category) {
 			dispatch(fetchCategoryPosts(category));
 		},
 
