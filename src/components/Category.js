@@ -7,7 +7,6 @@ import map from 'lodash/map';
 import reduce from 'lodash/reduce';
 import difference from 'lodash/difference';
 import get from 'lodash/get';
-import styled from 'styled-components';
 
 import {
 	fetchPostComments,
@@ -17,7 +16,6 @@ import {
 } from '../actions';
 
 import PostList from './PostList';
-import PostListItem from './PostListItem';
 
 import type { CommentsWrapper_T, PostsWrapper_T } from '../utils/types';
 
@@ -40,13 +38,7 @@ class Category extends Component {
 	}
 
 	render() {
-		const {
-			posts,
-			commentsByPost,
-			voteUp,
-			voteDown,
-			match: { params: { category } }
-		} = this.props;
+		const { posts, commentsByPost, voteUp, voteDown } = this.props;
 
 		return (
 			<PostList

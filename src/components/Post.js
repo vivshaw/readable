@@ -1,7 +1,6 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import filter from 'lodash/filter';
 
@@ -13,7 +12,7 @@ import {
 	downvoteComment
 } from '../actions';
 
-import type { CommentsWrapper_T, PostsWrapper_T } from '../utils/types';
+import type { CommentsWrapper_T } from '../utils/types';
 
 class Post extends Component {
 	componentWillMount() {
