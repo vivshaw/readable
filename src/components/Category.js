@@ -25,9 +25,7 @@ class Category extends Component {
 		if (nextProps.category !== this.props.category) {
 			this.props.getPosts(nextProps.category);
 		}
-	}
 
-	componentWillUpdate(nextProps) {
 		if (nextProps.posts !== this.props.posts) {
 			const newPosts = difference(nextProps.posts, this.props.posts);
 			newPosts.map(post => this.props.getPostComments(post.id));
