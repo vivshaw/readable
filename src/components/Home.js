@@ -5,11 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const Home = props => {
-	const categories = props.categories.map(category => (
-		<Link to={`/${category}`}>{category}</Link>
-	));
-
-	return <div>{categories}</div>;
+	return <div>Home</div>;
 };
 
 const mapStateToProps = state => {
