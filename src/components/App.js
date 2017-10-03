@@ -25,6 +25,8 @@ const Wrapper = styled.div`
 	width: 90%;
 	max-width: 1280px;
 	margin: 8px auto;
+	background-color: #eeeeee;
+	font-size: 13px;
 `;
 
 class App extends Component {
