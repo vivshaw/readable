@@ -3,6 +3,7 @@
 import omit from 'lodash/omit';
 import reduce from 'lodash/reduce';
 import get from 'lodash/get';
+import filter from 'lodash/filter';
 
 import {
 	RECEIVE_COMMENTS,
@@ -48,6 +49,11 @@ export default comments;
 /*
  | Selectors
  */
+
+export const selectCommentsByPost = (
+	postId: string,
+	comments: CommentsWrapper_T
+) => filter(comments, comment => comment.parentId === postId);
 
 export const groupCommentsByPosts = (
 	comments: CommentsWrapper_T,

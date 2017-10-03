@@ -15,5 +15,5 @@ const rootReducer = combineReducers({
 
 export default rootReducer;
 
-export { groupCommentsByPosts } from './comments';
+export { groupCommentsByPosts, selectCommentsByPost } from './comments';
 export { selectPostsByCategory } from './categories';

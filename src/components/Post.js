@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import filter from 'lodash/filter';
 
 import {
 	fetchPost,
@@ -11,6 +10,7 @@ import {
 	upvoteComment,
 	downvoteComment
 } from '../actions';
+import { selectCommentsByPost } from '../reducers';
 
 import type { CommentsWrapper_T } from '../utils/types';
 
@@ -47,9 +47,6 @@ class Post extends Component {
 	}
 }
 
-const selectCommentsByPost = (postId: string, comments: CommentsWrapper_T) =>
-	filter(comments, comment => comment.parentId === postId);
-
 const mapStateToProps = ({ posts, comments }, ownProps) => {
 	const post = ownProps.match.params.post;
 
@@ -66,6 +63,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 		getPost() {
 			dispatch(fetchPost(post));
 		},
+
 		voteUp(id) {
 			dispatch(upvote(id));
 		},
