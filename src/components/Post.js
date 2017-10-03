@@ -24,7 +24,7 @@ class Post extends Component {
 		const { post, comments, voteUpComment, voteDownComment } = this.props;
 
 		const commentList = comments.map(comment => (
-			<li>
+			<li key={comment.id}>
 				{comment.body}, {comment.author}, {comment.voteScore}{' '}
 				<button onClick={() => voteUpComment(comment.id)}>up</button>{' '}
 				<button onClick={() => voteDownComment(comment.id)}>down</button>
