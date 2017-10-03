@@ -14,8 +14,6 @@ import { groupCommentsByPosts, selectPostsByCategory } from '../reducers';
 
 import PostList from './PostList';
 
-import type { CommentsWrapper_T, PostsWrapper_T } from '../utils/types';
-
 class Category extends Component {
 	componentDidMount() {
 		this.props.initializePosts();

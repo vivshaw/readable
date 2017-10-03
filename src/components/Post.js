@@ -12,8 +12,6 @@ import {
 } from '../actions';
 import { selectCommentsByPost } from '../reducers';
 
-import type { CommentsWrapper_T } from '../utils/types';
-
 class Post extends Component {
 	componentWillMount() {
 		this.props.getPost();
