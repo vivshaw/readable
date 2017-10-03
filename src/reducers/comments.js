@@ -1,6 +1,8 @@
 // @flow
 
 import omit from 'lodash/omit';
+import reduce from 'lodash/reduce';
+import get from 'lodash/get';
 
 import {
 	RECEIVE_COMMENTS,
@@ -9,6 +11,8 @@ import {
 	UPVOTE_COMMENT,
 	DOWNVOTE_COMMENT
 } from '../actions';
+
+import { selectPostIds } from './posts';
 
 import type { CommentsWrapper_T } from '../utils/types';
 
@@ -40,3 +44,26 @@ const comments = (state: CommentsWrapper_T = {}, action: any) => {
 };
 
 export default comments;
+
+/*
+ | Selectors
+ */
+
+export const groupCommentsByPosts = (
+	comments: CommentsWrapper_T,
+	posts: PostsWrapper_T
+) => {
+	const postIds = selectPostIds(posts);
+
+	return reduce(
+		comments,
+		(byParent, { parentId, id }) => {
+			if (postIds.includes(parentId)) {
+				byParent[parentId] = get(byParent, parentId, []).concat(id);
+			}
+
+			return byParent;
+		},
+		{}
+	);
+};

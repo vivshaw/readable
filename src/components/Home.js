@@ -2,14 +2,12 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import map from 'lodash/map';
-import reduce from 'lodash/reduce';
 import difference from 'lodash/difference';
-import get from 'lodash/get';
 
 import PostList from './PostList';
 
 import { fetchPostComments, fetchAllPosts, upvote, downvote } from '../actions';
+import { groupCommentsByPosts } from '../reducers';
 
 class Home extends Component {
 	componentDidMount() {
@@ -36,27 +34,6 @@ class Home extends Component {
 	}
 }
 
-const selectPostIds = (posts: PostsWrapper_T) => map(posts, 'id');
-
-const groupCommentsByPosts = (
-	comments: CommentsWrapper_T,
-	posts: PostsWrapper_T
-) => {
-	const postIds = selectPostIds(posts);
-
-	return reduce(
-		comments,
-		(byParent, { parentId, id }) => {
-			if (postIds.includes(parentId)) {
-				byParent[parentId] = get(byParent, parentId, []).concat(id);
-			}
-
-			return byParent;
-		},
-		{}
-	);
-};
-
 const mapStateToProps = state => {
 	return {
 		posts: state.posts,
@@ -65,11 +42,9 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-	const ownCategory = ownProps.match.params.category;
-
 	return {
 		getAllPosts() {
-			dispatch(fetchAllPosts(ownCategory));
+			dispatch(fetchAllPosts());
 		},
 
 		getPostComments(id) {

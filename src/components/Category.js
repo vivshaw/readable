@@ -2,11 +2,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import filter from 'lodash/filter';
-import map from 'lodash/map';
-import reduce from 'lodash/reduce';
 import difference from 'lodash/difference';
-import get from 'lodash/get';
 
 import {
 	fetchPostComments,
@@ -14,6 +10,7 @@ import {
 	upvote,
 	downvote
 } from '../actions';
+import { groupCommentsByPosts, selectPostsByCategory } from '../reducers';
 
 import PostList from './PostList';
 
@@ -51,64 +48,35 @@ class Category extends Component {
 	}
 }
 
-const selectPostsByCategory = (posts: PostsWrapper_T, category: string) =>
-	filter(posts, post => post.category === category);
+const mapStateToProps = (
+	{ posts, comments },
+	{ match: { params: { category } } }
+) => ({
+	category,
+	posts: selectPostsByCategory(posts, category),
+	commentsByPost: groupCommentsByPosts(comments, posts)
+});
 
-const selectPostIds = (posts: PostsWrapper_T) => map(posts, 'id');
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	initializePosts() {
+		dispatch(fetchCategoryPosts(ownProps.match.params.category));
+	},
 
-const groupCommentsByPosts = (
-	comments: CommentsWrapper_T,
-	posts: PostsWrapper_T
-) => {
-	const postIds = selectPostIds(posts);
+	getPosts(category) {
+		dispatch(fetchCategoryPosts(category));
+	},
 
-	return reduce(
-		comments,
-		(byParent, { parentId, id }) => {
-			if (postIds.includes(parentId)) {
-				byParent[parentId] = get(byParent, parentId, []).concat(id);
-			}
+	getPostComments(id) {
+		dispatch(fetchPostComments(id));
+	},
 
-			return byParent;
-		},
-		{}
-	);
-};
+	voteUp(id) {
+		dispatch(upvote(id));
+	},
 
-const mapStateToProps = ({ posts, comments }, ownProps) => {
-	const category = ownProps.match.params.category;
-
-	return {
-		category,
-		posts: selectPostsByCategory(posts, category),
-		commentsByPost: groupCommentsByPosts(comments, posts)
-	};
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-	const ownCategory = ownProps.match.params.category;
-
-	return {
-		initializePosts() {
-			dispatch(fetchCategoryPosts(ownCategory));
-		},
-
-		getPosts(category) {
-			dispatch(fetchCategoryPosts(category));
-		},
-
-		getPostComments(id) {
-			dispatch(fetchPostComments(id));
-		},
-
-		voteUp(id) {
-			dispatch(upvote(id));
-		},
-
-		voteDown(id) {
-			dispatch(downvote(id));
-		}
-	};
-};
+	voteDown(id) {
+		dispatch(downvote(id));
+	}
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Category);

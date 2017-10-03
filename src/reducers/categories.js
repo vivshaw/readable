@@ -1,5 +1,7 @@
 // @flow
 
+import filter from 'lodash/filter';
+
 import { GET_CATEGORIES } from '../actions';
 
 const categories = (state: Array<string> = [], action: any) => {
@@ -12,3 +14,12 @@ const categories = (state: Array<string> = [], action: any) => {
 };
 
 export default categories;
+
+/*
+ | Selectors
+ */
+
+export const selectPostsByCategory = (
+	posts: PostsWrapper_T,
+	category: string
+) => filter(posts, post => post.category === category);

@@ -1,6 +1,7 @@
 // @flow
 
 import omit from 'lodash/omit';
+import map from 'lodash/map';
 
 import {
 	RECEIVE_POSTS,
@@ -40,3 +41,9 @@ const posts = (state: PostsWrapper_T = {}, action: any) => {
 };
 
 export default posts;
+
+/*
+ | Selectors
+ */
+
+export const selectPostIds = (posts: PostsWrapper_T) => map(posts, 'id');
