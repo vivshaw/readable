@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import difference from 'lodash/difference';
+import map from 'lodash/map';
 
 import PostList from './PostList';
 
@@ -14,12 +15,13 @@ class Home extends Component {
 		this.props.getAllPosts();
 	}
 
-	componentWillUpdate(nextProps) {
+	componentWillReceiveProps(nextProps) {
 		if (nextProps.posts !== this.props.posts) {
 			const newPosts = difference(nextProps.posts, this.props.posts);
 			newPosts.map(post => this.props.getPostComments(post.id));
 		}
 	}
+
 	render() {
 		const { posts, commentsByPost, voteUp, voteDown } = this.props;
 
@@ -34,31 +36,27 @@ class Home extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-	return {
-		posts: state.posts,
-		commentsByPost: groupCommentsByPosts(state.comments, state.posts)
-	};
-};
+const mapStateToProps = ({ comments, posts }) => ({
+	posts: map(posts, post => post),
+	commentsByPost: groupCommentsByPosts(comments, posts)
+});
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	return {
-		getAllPosts() {
-			dispatch(fetchAllPosts());
-		},
+const mapDispatchToProps = dispatch => ({
+	getAllPosts() {
+		dispatch(fetchAllPosts());
+	},
 
-		getPostComments(id) {
-			dispatch(fetchPostComments(id));
-		},
+	getPostComments(id) {
+		dispatch(fetchPostComments(id));
+	},
 
-		voteUp(id) {
-			dispatch(upvote(id));
-		},
+	voteUp(id) {
+		dispatch(upvote(id));
+	},
 
-		voteDown(id) {
-			dispatch(downvote(id));
-		}
-	};
-};
+	voteDown(id) {
+		dispatch(downvote(id));
+	}
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
