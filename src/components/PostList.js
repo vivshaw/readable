@@ -1,24 +1,10 @@
 // @flow
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import filter from 'lodash/filter';
+import React from 'react';
 import map from 'lodash/map';
-import reduce from 'lodash/reduce';
-import difference from 'lodash/difference';
-import get from 'lodash/get';
 import styled from 'styled-components';
 
-import {
-	fetchPostComments,
-	fetchCategoryPosts,
-	upvote,
-	downvote
-} from '../actions';
-
 import PostListItem from './PostListItem';
-
-import type { CommentsWrapper_T, PostsWrapper_T } from '../utils/types';
 
 const PostListWrapper = styled.ol`
 	padding-left: 3em;

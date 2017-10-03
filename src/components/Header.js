@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const HeaderWrapper = styled.div`
-	background-color: #a463f2;
-	color: #ffffff;
+	background-color: ${props => props.theme.palette.primary1Color};
+	color: ${props => props.theme.palette.primary3Color};
 	padding: 6px;
 `;
 
@@ -15,7 +15,7 @@ const HeaderLink = styled(Link)`
 
 const Logo = styled.div`
 	display: inline-block;
-	border: 1px solid #ffffff;
+	border: 1px solid ${props => props.theme.palette.primary3Color};
 	width: 18px;
 	height: 18px;
 	font-weight: bold;

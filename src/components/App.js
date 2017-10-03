@@ -4,35 +4,35 @@ import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import AppBar from 'material-ui/AppBar';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import Header from './Header';
 import Home from './Home';
 import Category from './Category';
 import Post from './Post';
 
-const renewsTheme = getMuiTheme({
+export const renewsTheme = {
 	palette: {
-		primary1Color: '#9EEBCF'
-	},
-	appBar: {
-		height: 50
+		primary1Color: '#a463f2',
+		primary3Color: '#ffffff',
+		accent1Color: '#000000',
+		accent2Color: '#666666',
+		accent3Color: '#eeeeee'
 	}
-});
+};
 
 const Wrapper = styled.div`
 	width: 90%;
 	max-width: 1280px;
 	margin: 8px auto;
-	background-color: #eeeeee;
+	background-color: ${props => props.theme.palette.accent3Color};
 	font-size: 13px;
 `;
 
 class App extends Component {
 	render() {
 		return (
-			<MuiThemeProvider muiTheme={renewsTheme}>
+			<ThemeProvider theme={renewsTheme}>
 				<BrowserRouter>
 					<Wrapper>
 						<Header />
@@ -43,7 +43,7 @@ class App extends Component {
 						</Switch>
 					</Wrapper>
 				</BrowserRouter>
-			</MuiThemeProvider>
+			</ThemeProvider>
 		);
 	}
 }

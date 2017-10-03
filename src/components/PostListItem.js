@@ -10,21 +10,23 @@ const ListItem = styled.li`
 
 const PostTitle = styled.div`
 	font-size: 18px;
-	color: #666666;
+	color: ${props => props.theme.palette.accent2Color};
 `;
 
 const TitleLink = styled(Link)`
 	font-size: 18px;
-	color: #000000;
+	color: ${props => props.theme.palette.accent1Color};
 	text-decoration: none;
 `;
 
-const PostMeta = styled.div`color: #666666;`;
+const PostMeta = styled.div`
+	color: ${props => props.theme.palette.accent2Color};
+`;
 
 const Author = styled.span`font-weight: bold;`;
 
 const MetaLink = styled(Link)`
-	color: #666666;
+	color: ${props => props.theme.palette.accent2Color};
 	text-decoration: none;
 `;
 
