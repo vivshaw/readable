@@ -1,13 +1,13 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import filter from 'lodash/filter';
 import map from 'lodash/map';
 import reduce from 'lodash/reduce';
 import difference from 'lodash/difference';
 import get from 'lodash/get';
+import styled from 'styled-components';
 
 import {
 	fetchPostComments,
@@ -15,6 +15,9 @@ import {
 	upvote,
 	downvote
 } from '../actions';
+
+import PostList from './PostList';
+import PostListItem from './PostListItem';
 
 import type { CommentsWrapper_T, PostsWrapper_T } from '../utils/types';
 
@@ -34,8 +37,6 @@ class Category extends Component {
 			const newPosts = difference(nextProps.posts, this.props.posts);
 			newPosts.map(post => this.props.getPostComments(post.id));
 		}
-
-		console.log(nextProps.posts);
 	}
 
 	render() {
@@ -47,27 +48,14 @@ class Category extends Component {
 			match: { params: { category } }
 		} = this.props;
 
-		const postList = map(posts, ({ id, author, title, voteScore }) => {
-			const comments = commentsByPost[id] || [];
-
-			return (
-				<div key={id}>
-					<Link to={`/${category}/${id}`}>{title}</Link>
-					<p>Author: {author}</p>
-					<p>
-						{voteScore} <button onClick={() => voteUp(id)}>up</button>{' '}
-						<button onClick={() => voteDown(id)}>down</button>
-					</p>
-					<p>{comments.length} comments</p>
-				</div>
-			);
-		});
-
 		return (
-			<div>
-				<h1>{category}</h1>
-				<div>{postList}</div>
-			</div>
+			<PostList
+				posts={posts}
+				commentsByPost={commentsByPost}
+				voteUp={voteUp}
+				voteDown={voteDown}
+				category={category}
+			/>
 		);
 	}
 }
