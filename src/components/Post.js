@@ -92,13 +92,13 @@ class Post extends Component {
 								<TimeAgo date={post.timestamp} /> |{' '}
 								<MetaLink to={`/${post.category}/${post.id}`}>
 									{comments.length} comments
-								</MetaLink>{' '}
+								</MetaLink>
 							</PostMeta>
 						</VoteButtons>
 					</ListItem>
 				)}
 
-				<ul>{commentList}</ul>
+				<ul style={{ paddingLeft: '0' }}>{commentList}</ul>
 			</div>
 		);
 	}
