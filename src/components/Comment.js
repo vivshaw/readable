@@ -8,7 +8,6 @@ const ListItem = styled.li`
 	display: block;
 	list-style-type: none;
 	list-style-position: inside;
-	padding-left: 10px;
 	margin-top: 30px;
 	margin-bottom: 15px;
 `;

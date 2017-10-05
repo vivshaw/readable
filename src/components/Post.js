@@ -46,7 +46,7 @@ const MetaLink = styled(Link)`
 	text-decoration: none;
 `;
 
-const VoteButtons = styled.div`margin-left: 10px;`;
+const VoteButtons = styled.div`margin-right: 10px;`;
 
 class Post extends Component {
 	componentWillMount() {
@@ -73,29 +73,32 @@ class Post extends Component {
 		));
 
 		return (
-			<div>
+			<div style={{ marginLeft: '10px' }}>
 				{post && (
-					<ListItem>
-						<VoteButtons>
-							<div onClick={() => voteUp()}>u</div>
-							<div onClick={() => voteDown()}>d</div>
-						</VoteButtons>
-						<VoteButtons>
-							<PostTitle>
-								<TitleLink to={`/${post.category}/${post.id}`}>
-									{post.title}
-								</TitleLink>
-							</PostTitle>
+					<div>
+						<ListItem>
+							<VoteButtons>
+								<div onClick={() => voteUp()}>u</div>
+								<div onClick={() => voteDown()}>d</div>
+							</VoteButtons>
+							<VoteButtons>
+								<PostTitle>
+									<TitleLink to={`/${post.category}/${post.id}`}>
+										{post.title}
+									</TitleLink>
+								</PostTitle>
 
-							<PostMeta>
-								{post.voteScore} points by <Author>{post.author}</Author>{' '}
-								<TimeAgo date={post.timestamp} /> |{' '}
-								<MetaLink to={`/${post.category}/${post.id}`}>
-									{comments.length} comments
-								</MetaLink>
-							</PostMeta>
-						</VoteButtons>
-					</ListItem>
+								<PostMeta>
+									{post.voteScore} points by <Author>{post.author}</Author>{' '}
+									<TimeAgo date={post.timestamp} /> |{' '}
+									<MetaLink to={`/${post.category}/${post.id}`}>
+										{comments.length} comments
+									</MetaLink>
+								</PostMeta>
+							</VoteButtons>
+						</ListItem>
+						<p>{post.body}</p>
+					</div>
 				)}
 
 				<ul style={{ paddingLeft: '0' }}>{commentList}</ul>
