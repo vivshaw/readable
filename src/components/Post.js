@@ -17,7 +17,7 @@ import {
 } from '../actions';
 import { selectCommentsByPost } from '../reducers';
 
-const ListItem = styled.li`
+const ListItem = styled.div`
 	margin-top: 15px;
 	margin-bottom: 16px;
 	display: flex;
