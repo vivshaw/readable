@@ -7,6 +7,7 @@ import Header from './Header';
 import Home from './Home';
 import Category from './Category';
 import Post from './Post';
+import NewPost from './NewPost';
 
 export const renewsTheme = {
 	palette: {
@@ -35,6 +36,7 @@ class App extends Component {
 						<Header />
 						<Switch>
 							<Route exact path="/" component={Home} />
+							<Route exact path="/new" component={NewPost} />
 							<Route path="/:category/:post" component={Post} />
 							<Route path="/:category" component={Category} />
 						</Switch>
