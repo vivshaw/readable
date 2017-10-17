@@ -3,10 +3,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import TimeAgo from 'react-timeago';
 
 import Comment from './Comment';
+import EditablePostView from './EditablePostView';
 
 import {
 	fetchPost,
@@ -16,37 +15,6 @@ import {
 	downvoteComment
 } from '../actions';
 import { selectCommentsByPost } from '../reducers';
-
-const ListItem = styled.div`
-	margin-top: 15px;
-	margin-bottom: 16px;
-	display: flex;
-	align-items: center;
-`;
-
-const PostTitle = styled.div`
-	font-size: 18px;
-	color: ${props => props.theme.palette.accent2Color};
-`;
-
-const TitleLink = styled(Link)`
-	font-size: 18px;
-	color: ${props => props.theme.palette.accent1Color};
-	text-decoration: none;
-`;
-
-const PostMeta = styled.div`
-	color: ${props => props.theme.palette.accent2Color};
-`;
-
-const Author = styled.span`font-weight: bold;`;
-
-const MetaLink = styled(Link)`
-	color: ${props => props.theme.palette.accent2Color};
-	text-decoration: none;
-`;
-
-const VoteButtons = styled.div`margin-right: 10px;`;
 
 class Post extends Component {
 	componentWillMount() {
@@ -75,30 +43,13 @@ class Post extends Component {
 		return (
 			<div style={{ marginLeft: '10px' }}>
 				{post && (
-					<div>
-						<ListItem>
-							<VoteButtons>
-								<div onClick={() => voteUp()}>u</div>
-								<div onClick={() => voteDown()}>d</div>
-							</VoteButtons>
-							<VoteButtons>
-								<PostTitle>
-									<TitleLink to={`/${post.category}/${post.id}`}>
-										{post.title}
-									</TitleLink>
-								</PostTitle>
-
-								<PostMeta>
-									{post.voteScore} points by <Author>{post.author}</Author>{' '}
-									<TimeAgo date={post.timestamp} /> |{' '}
-									<MetaLink to={`/${post.category}/${post.id}`}>
-										{comments.length} comments
-									</MetaLink>
-								</PostMeta>
-							</VoteButtons>
-						</ListItem>
-						<p>{post.body}</p>
-					</div>
+					<EditablePostView
+						post={post}
+						comments={comments}
+						voteUp={voteUp}
+						voteDown={voteDown}
+						editing={true}
+					/>
 				)}
 
 				<ul style={{ paddingLeft: '0' }}>{commentList}</ul>
