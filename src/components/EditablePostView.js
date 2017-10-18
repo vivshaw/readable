@@ -41,8 +41,7 @@ class EditablePostView extends Component {
 	state = {
 		editing: false,
 		title: this.props.post.title,
-		body: this.props.post.body,
-		author: this.props.post.author
+		body: this.props.post.body
 	};
 
 	toggleEdit = () => {
@@ -54,11 +53,19 @@ class EditablePostView extends Component {
 	submitEdit = () => {
 		const changes = {
 			title: this.state.title,
-			body: this.state.body,
-			author: this.state.author
+			body: this.state.body
 		};
 
 		this.props.edit(changes);
+		this.toggleEdit();
+	};
+
+	discard = () => {
+		this.setState(state => ({
+			body: this.props.post.body,
+			title: this.props.post.title,
+			editing: false
+		}));
 	};
 
 	onChangeTitle = event => {
@@ -67,10 +74,6 @@ class EditablePostView extends Component {
 
 	onChangeBody = event => {
 		this.setState({ body: event.target.value });
-	};
-
-	onChangeAuthor = event => {
-		this.setState({ author: event.target.value });
 	};
 
 	render() {
@@ -95,12 +98,7 @@ class EditablePostView extends Component {
 							</PostTitle>
 
 							<PostMeta>
-								{post.voteScore} points by{' '}
-								<input
-									name="author"
-									value={author}
-									onChange={this.onChangeAuthor}
-								/>{' '}
+								{post.voteScore} points by <Author>{post.author}</Author>{' '}
 								<TimeAgo date={post.timestamp} /> |{' '}
 								<MetaLink to={`/${post.category}/${post.id}`}>
 									{comments.length} comments
@@ -111,7 +109,7 @@ class EditablePostView extends Component {
 					<p>
 						<input name="body" value={body} onChange={this.onChangeBody} />
 					</p>
-					<button onClick={this.toggleEdit}>Edit</button>
+					<button onClick={this.discard}>Discard</button>
 					<button onClick={this.submitEdit}>Submit</button>
 				</div>
 			);
