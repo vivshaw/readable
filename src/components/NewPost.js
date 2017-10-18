@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import uuidv4 from 'uuid/v4';
 
 import { createPost } from '../actions';
-
-import uuidv4 from 'uuid/v4';
 
 class NewPost extends Component {
 	state = {
