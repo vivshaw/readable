@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 
 import { editPost } from '../actions';
 
+import NewComment from './NewComment';
+
 const ListItem = styled.div`
 	margin-top: 15px;
 	margin-bottom: 16px;
@@ -111,6 +113,8 @@ class EditablePostView extends Component {
 					</p>
 					<button onClick={this.discard}>Discard</button>
 					<button onClick={this.submitEdit}>Submit</button>
+					<p>New comment:</p>
+					<NewComment parentId={post.id} />
 				</div>
 			);
 		} else {
@@ -139,6 +143,8 @@ class EditablePostView extends Component {
 					</ListItem>
 					<p>{post.body}</p>
 					<button onClick={this.toggleEdit}>Edit</button>
+					<p>New comment:</p>
+					<NewComment parentId={post.id} />
 				</div>
 			);
 		}

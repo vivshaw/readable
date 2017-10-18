@@ -48,7 +48,6 @@ class Post extends Component {
 						comments={comments}
 						voteUp={voteUp}
 						voteDown={voteDown}
-						editing={true}
 					/>
 				)}
 
